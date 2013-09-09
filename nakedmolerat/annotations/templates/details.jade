@@ -1,0 +1,68 @@
+extends base
+
+block title
+    title The Naked Mole-Rat Genome Resource
+
+block content
+    header.page-header
+        div.container
+            h1 
+                | Sequence details
+                small {{details.identifier}} ({{details.type.name}})
+    div.page.container
+        div.row
+            div.col-md-12
+                if details.genes.count > 0
+                    h2 Potential Gene Matches
+                    p The following genes have been identified as possible orthologs in the Naked Mole-Rat. For more details on the proocess used to obtain these please see <a href="{% url 'about_annotations' %}">this page about the annotation process</a>
+                    for g in details.genes.all
+                        div.panel.panel-default.panel-nmr
+                            div.panel-heading
+                                h3
+                                    | {{g.gene.symbol}}
+                                    small
+                                        a(href="http://www.ensembl.org/Mus_musculus/Gene/Summary?db=core;g={{g.gene.ensembl}}")= g.gene.ensembl
+                            div.row.panel-body
+                                div.col-md-6
+                                    h4 Gene Details 
+                                    p= g.gene.name
+
+                                    h4 External Links
+                                    ul
+                                        if g.gene.entrez_id != ''
+                                            li
+                                                | EntrezGene ID:
+                                                a(href="http://www.ncbi.nlm.nih.gov/gene/{{g.gene.entrez_id}}")= g.gene.entrez_id
+                                        if g.gene.uniprot != ''
+                                            li
+                                                | UniProt:
+                                                a(href="http://www.uniprot.org/uniprot/?query={{g.gene.uniprot}}")= g.gene.uniprot
+                                        if g.gene.unigene != ''
+                                            li
+                                                | UniGene:
+                                                a(href="http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Mu&CID={{g.gene.unigene}}")= g.gene.unigene
+                                div.col-md-6
+                                    h4 
+                                        | Gene match
+                                        small
+                                            |(Ensembl Protien ID:
+                                            a(href="http://www.ensembl.org/Mus_musculus/Gene/Summary?db=core;p={{g.identifier}}")= g.identifier
+                                            |)
+                                    table.table
+                                        tr.no-top-border
+                                            th Protein Percentage
+                                            td {{g.protein_percentage_match}}%
+                                        tr
+                                            th cDNA percentage
+                                            td {{g.cdna_percentage_match}}%
+                                        tr
+                                            th Ka/Ks Ratio
+                                            td {{g.ka_ks_ratio}} (Ka = {{g.ka}}, Ks = {{g.ks}})
+
+            div.col-md-12
+                h2 Sequence
+                b Length: 
+                span {{details.sequence|length}}bp
+                <pre>>{{details.identifier}}
+                {{details.sequence|default:"No sequence found"}}
+                </pre>

@@ -1,0 +1,140 @@
+@import 'bootstrap.less';
+
+@base-colour: #D1BAB9;
+@shade-colour: #918181;
+@dark-colour: #514948;
+@lighter-colour: #B7A3A2;
+@lightest-colour: #DEC5C4;
+
+@panel-bg-colour: #B09D9D;
+
+//@navbar-default-bg: #EEE1DD;
+//@navbar-default-link-color: #886948;
+@link-color: @shade-colour;
+
+body { 
+    padding-top: 50px;
+    max-width: 100%;
+}
+
+p {
+    //line-height: 1.45;
+}
+
+h2, h3 {
+    font-weight: 200;
+}
+
+figcaption {
+    margin-top: 1em;
+    font-size: 0.9em;
+}
+
+.navbar-image-brand {
+    padding: 5px 15px 0 15px;
+}
+
+.site-footer {
+    margin-top: 1.5em;
+    border-top: 1px solid #E5E5E5;
+    display: block;
+    padding: 2em 1em;
+}
+
+.nmr-header {
+    //background: url(/static/images/nmr_header_shaded.jpg) no-repeat center -320px;
+    background: url(/static/images/nmr_header_shaded_alt.jpg) no-repeat center -550px;
+    color: white;
+    //text-shadow: black 2px 2px, black -2px -2px, black 2px -2px, black -2px 2px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.15); 
+    h1 {
+        margin-top: 2em;
+        margin-bottom: 0.1em;
+        font-size: 3.5em;
+        font-weight: 500;
+    }
+    p {
+        margin-bottom: 4em;
+        font-size: 1.5em;
+        color: #FFF2F1;
+    }
+}
+
+.panel-nmr {
+    border-color: @shade-colour;
+    .panel-heading {
+        border-color: @shade-colour;
+        background-color: @panel-bg-colour;
+    }
+    h2 {
+        margin: 0;
+        padding: 0;
+        font-size: 1.75em;
+        color: white;
+    }
+    h3 {
+        font-size: 1.5em;
+    }
+    a {
+        color: darken(@link-color, 10%);
+    }
+}
+
+.btn-nmr {
+    background-color: #B09D9D;
+    border-color: @shade-colour;
+}
+
+.btn-nmr:hover {
+    background-color: @shade-colour;
+    border-color: darken(@shade-colour, 10%);
+}
+
+.no-top-border th, .no-top-border td {
+    border-top: 0 !important;
+}
+
+.homepage-main-section {
+    padding: 1em 0 0 0;
+}
+
+.alt-content-section {
+    margin-top: 1em;
+    padding: 1em 0 3em 0;
+    background: url(/static/images/nmr_header_shaded_alt.jpg) no-repeat center -460px;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.15); 
+    a {
+        color: @dark-colour; 
+    }
+}
+
+.alt-content-section.no-image {
+    background: @shade-colour;
+}
+
+.alt-content-section.padded {
+    margin: 0;
+    padding: 1em;
+    h2 {
+        margin-top: 0;
+    }
+}
+
+a.homepage-search-container-link {
+    font-size: 1.35em;
+}
+
+.homepage-search-container-form {
+    margin-bottom: 1em;
+}
+
+.panel-heading h3 {
+    margin: 0;
+}
+
+.panel-body h4 {
+    padding-bottom: 0.25em;
+    font-weight: 200;
+    border-bottom: 1px solid #eee;
+}
