@@ -1,0 +1,46 @@
+!!!
+html
+    head
+        block title
+            title {{title}}
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="shortcut icon", href="/static/images/favicon.ico")
+        link(href="/static/css/styles.css", rel="stylesheet", media="screen")
+        block extracss
+    body
+        header.site-header
+            nav(role="navigation").navbar.navbar-default.navbar-fixed-top
+                div.container
+                    div.navbar-header
+                        button(type="button", data-toggle="collapse", data-target=".navbar-ex1-collapse").navbar-toggle
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a(href="/").navbar-brand.navbar-image-brand 
+                            img(src="/static/images/nmr_logo_header.png", width="97px", height="40px", alt="Naked Mole-Rat Genome Resource")
+                    div.navbar-collapse.navbar-ex1-collapse
+                        ul.nav.navbar-nav
+                            li: a(href="/about") About
+                            li: a(href="/gene_expression") Gene Expression 
+                            li: a(href="/downloads") Downloads 
+                            li: a(href="/blast/") BLAST 
+                            li: a(href="/annotations") Genome Annotations
+                        form(role="search").navbar-form.navbar-right
+                            div.form-group
+                                input(type="text", placeholder="e.g. P53, ENSMUSG00000059552").form-control
+                            button(type="submit").btn.btn-default Search
+        block content
+
+        footer.site-footer
+            div.container
+                div.row
+                    div.col-md-6
+                        span Part of the <a href="http://pcwww.liv.ac.uk/~aging/">Integrative Genomics of Ageing group</a> at the <a href="http://liv.ac.uk"><img src="/static/images/liverpool_university_logo.png" alt="University of Liverpool" width="246" height="69"></a>
+                    div.col-md-6
+                        span.pull-right If you have any queries or suggestions you are welcome to <a href="http://pcwww.liv.ac.uk/~aging/contact.html">contact us</a>.
+
+        block extrajs
+
+        script(src="/static/js/jquery-1.10.2.min.js")
+        script(src="/static/js/bootstrap.js")
