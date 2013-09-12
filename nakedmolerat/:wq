@@ -1,6 +1,0 @@
-import django_tables2 as tables
-from nakedmolerat.annotations.models import Sequence
-
-class SequenceTable(tables.Table):
-    class Meta:
-        model = Sequence
