@@ -5950,6 +5950,9 @@ figcaption {
   border-color: #918181;
   background-color: #b09d9d;
 }
+.panel-nmr .panel-heading small {
+  color: #dec5c4;
+}
 .panel-nmr h2 {
   margin: 0;
   padding: 0;

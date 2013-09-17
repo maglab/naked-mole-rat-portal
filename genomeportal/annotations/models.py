@@ -54,9 +54,12 @@ class Sequence(models.Model):
     sequence = models.TextField(blank=True, null=True)
 
     type = models.ForeignKey(SequenceType)
-    #gene = models.ForeignKey(Gene, blank=True, null=True)
+    part_of = models.ForeignKey('self', related_name='related_sequences', blank=True, null=True)
 
     genes = models.ManyToManyField(GeneMatch, blank=True, null=True)
+
+    def position_from_identifier(self):
+        return self.identifier.split('_')[-1]
 
     def __unicode__(self):
         return self.identifier

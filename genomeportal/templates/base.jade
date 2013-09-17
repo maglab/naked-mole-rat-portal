@@ -26,9 +26,9 @@ html
                             li: a(href="/downloads") Downloads 
                             li: a(href="/blast/") BLAST 
                             li: a(href="/annotations") Genome Annotations
-                        form(role="search").navbar-form.navbar-right
+                        form(role="search", method="get", action="{% url 'annotation_results' %}").navbar-form.navbar-right
                             div.form-group
-                                input(type="text", placeholder="e.g. P53, ENSMUSG00000059552").form-control
+                                input(type="text", placeholder="e.g. P53, ENSMUSG00000059552", name="s").form-control
                             button(type="submit").btn.btn-default Search
         block content
 

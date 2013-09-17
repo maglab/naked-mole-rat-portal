@@ -12,6 +12,14 @@ block content
     div.page.container
         div.row
             div.col-md-12
+                if details.part_of
+                    div.panel.panel-defaul.panel-nmr 
+                        div.panel-heading Part of {{details.part_of.identifier}} ({{details.part_of.type}})
+                        div.panel-body
+                            if details.part_of.genes.count > 0
+                                p There are <b>{{ details.part_of.genes.count }}</b> potential gene matches.
+                            p For more information consult the 
+                                a(href="{% url 'annotation_details' details.part_of.identifier details.part_of.type.name %}") page for {{details.part_of.identifier}} ({{details.part_of.type}}) 
                 if details.genes.count > 0
                     h2 Potential Gene Matches
                     p The following genes have been identified as possible orthologs in the Naked Mole-Rat. For more details on the proocess used to obtain these please see <a href="{% url 'about_annotations' %}">this page about the annotation process</a>
@@ -22,6 +30,7 @@ block content
                                     | {{g.gene.symbol}}
                                     small
                                         a(href="http://www.ensembl.org/Mus_musculus/Gene/Summary?db=core;g={{g.gene.ensembl}}")= g.gene.ensembl
+                                        | &nbsp;({{g.gene.organism.common_name}})
                             div.row.panel-body
                                 div.col-md-6
                                     h4 Gene Details 
@@ -47,7 +56,7 @@ block content
                                         small
                                             |(Ensembl Protien ID:
                                             a(href="http://www.ensembl.org/Mus_musculus/Gene/Summary?db=core;p={{g.identifier}}")= g.identifier
-                                            |)
+                                            |, {{g.gene.organism.common_name}})
                                     table.table
                                         tr.no-top-border
                                             th Protein Percentage
@@ -60,9 +69,27 @@ block content
                                             td {{g.ka_ks_ratio}} (Ka = {{g.ka}}, Ks = {{g.ks}})
 
             div.col-md-12
-                h2 Sequence
-                b Length: 
-                span {{details.sequence|length}}bp
+                h2 Sequence 
+                    small= details.type
+                div.row
+                    div.col-md-6
+                        b Length: 
+                        span {{details.sequence|length}}bp
+                    div.col-md-6.text-right
+                        a(href="http://genome-euro.ucsc.edu/cgi-bin/hgTracks?hgHubConnect.destUrl=..%2Fcgi-bin%2FhgTracks&clade=mammal&org=Naked+mole-rat&db=hetGla2&position={{details.position_from_identifier}}") View {{details.position_from_identifier}} on the UCSC Naked Mole-Rat Genome browser
                 <pre>>{{details.identifier}}
                 {{details.sequence|default:"No sequence found"}}
                 </pre>
+
+            if details.related_sequences > 0
+                div.col-md-12
+                    h2 Related Sequences
+                    for seq in details.related_sequences.all
+                        h3
+                            a(href="{% url 'annotation_details' seq.identifier seq.type.name %}") Sequence 
+                                small= seq.type
+                        b Length: 
+                        span {{seq.sequence|length}}bp
+                        <pre>>{{seq.identifier}}
+                        {{seq.sequence|default:"No sequence found"}}
+                        </pre>

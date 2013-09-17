@@ -9,9 +9,9 @@ class SequenceTable(tables.Table):
     class Meta:
         model = Sequence
         fields = ('identifier', 'type',)
-        attrs = {'class': 'table table-bordered'}
+        attrs = {'class': 'table table-bordered table-striped'}
 
-    identifier = tables.LinkColumn('annotation_details', args=[A('identifier')])
+    identifier = tables.LinkColumn('annotation_details', args=[A('identifier'), A('type')])
     type = tables.Column()
     gene = tables.Column(accessor=A('genes.all'), verbose_name='Gene', orderable=False)
 
