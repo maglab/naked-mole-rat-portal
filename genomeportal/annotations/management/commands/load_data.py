@@ -43,7 +43,7 @@ class Command(BaseCommand):
                     match = [{'SEQ1': seq.id, 'SEQ2': None}]
 
                 cds_sequence, new = Sequence.objects.get_or_create(identifier=seq.id, type=seq_cds, sequence=unicode(seq.seq))
-                protein_sequence, new = Sequence.objects.get_or_create(identifier=seq.id, type=seq_prot, sequence=protein_sequences[seq.id], part_of=cds_sequence)
+                protein_sequence, new = Sequence.objects.get_or_create(identifier='{}.protein'.format(seq.id), type=seq_prot, sequence=protein_sequences[seq.id], part_of=cds_sequence)
 
                 for m in match:
                     if m['SEQ2'] in details:

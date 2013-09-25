@@ -44,8 +44,8 @@ def results(request):
         'gene_pres_options': gene_pres_options,
     })
 
-def details(request, identifier, seq_type):
-    details = get_object_or_404(Sequence, identifier=identifier, type__name=seq_type)
+def details(request, identifier):
+    details = get_object_or_404(Sequence, identifier=identifier)
     return render(request, 'details.jade', {
         'details': details
     })

@@ -11,7 +11,7 @@ class SequenceTable(tables.Table):
         fields = ('identifier', 'type',)
         attrs = {'class': 'table table-bordered table-striped'}
 
-    identifier = tables.LinkColumn('annotation_details', args=[A('identifier'), A('type')])
+    identifier = tables.LinkColumn('annotation_details', args=[A('identifier')])
     type = tables.Column()
     gene = tables.Column(accessor=A('genes.all'), verbose_name='Gene', orderable=False)
 
