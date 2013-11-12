@@ -15,7 +15,7 @@ class SequenceTable(tables.Table):
     type = tables.Column()
     gene = tables.Column(accessor=A('identifier'), verbose_name='Gene/miRNA', orderable=False)
 
-    def render_gene(self, value):
+    def render_gene(self, value, record):
         if record.mirna_set.count() > 0:
             output = u''.join([u'<div>{}</div>'.format(v.identifier) for v in record.mirna_set.all()])
         else:
