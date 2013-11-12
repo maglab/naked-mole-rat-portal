@@ -20,16 +20,26 @@ block content
                                 p There are <b>{{ details.part_of.genes.count }}</b> potential gene matches.
                             p For more information consult the 
                                 a(href="{% url 'annotation_details' details.part_of.identifier %}") page for {{details.part_of.identifier}} ({{details.part_of.type}}) 
+                if details.mirna_set.count > 0
+                    h2 Potential miRNA matches
+                    for m in details.mirna_set.all
+                        div.panel.panel-default.panel-nmr
+                            div.panel-heading
+                                h3 {{ m.identifier }}
+                            div.panel-body
+                                div.col-md-12
+                                    a(href="http://www.mirbase.org/cgi-bin/mirna_entry.pl?id={{ m.identifier }}") View details on miRBase.
+
                 if details.genes.count > 0
                     h2 Potential Gene Matches
-                    p The following genes have been identified as possible orthologs in the Naked Mole-Rat. For more details on the proocess used to obtain these please see <a href="{% url 'about_annotations' %}">this page about the annotation process</a>
+                    p The following genes have been identified as possible orthologs in this organism.
                     for g in details.genes.all
                         div.panel.panel-default.panel-nmr
                             div.panel-heading
                                 h3
                                     | {{g.gene.symbol}}
                                     small
-                                        a(href="http://www.ensembl.org/Mus_musculus/Gene/Summary?db=core;g={{g.gene.ensembl}}")= g.gene.ensembl
+                                        a(href="http://www.ensembl.org/{{ g.gene.organism.convert_for_url }}/Gene/Summary?db=core;g={{g.gene.ensembl}}")= g.gene.ensembl
                                         | &nbsp;({{g.gene.organism.common_name}})
                             div.row.panel-body
                                 div.col-md-6
@@ -38,15 +48,15 @@ block content
 
                                     h4 External Links
                                     ul
-                                        if g.gene.entrez_id != ''
+                                        if g.gene.entrez_id != ''  and g.gene.entrez_id != None
                                             li
                                                 | EntrezGene ID:
                                                 a(href="http://www.ncbi.nlm.nih.gov/gene/{{g.gene.entrez_id}}")= g.gene.entrez_id
-                                        if g.gene.uniprot != ''
+                                        if g.gene.uniprot != ''  and g.gene.uniprot != None
                                             li
                                                 | UniProt:
                                                 a(href="http://www.uniprot.org/uniprot/?query={{g.gene.uniprot}}")= g.gene.uniprot
-                                        if g.gene.unigene != ''
+                                        if g.gene.unigene != ''  and g.gene.unigene != None
                                             li
                                                 | UniGene:
                                                 a(href="http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=Mu&CID={{g.gene.unigene}}")= g.gene.unigene
@@ -55,7 +65,7 @@ block content
                                         | Gene match
                                         small
                                             |(Ensembl Protien ID:
-                                            a(href="http://www.ensembl.org/Mus_musculus/Gene/Summary?db=core;p={{g.identifier}}")= g.identifier
+                                            a(href="http://www.ensembl.org/{{ g.gene.organism.convert_for_url }}/Gene/Summary?db=core;p={{g.identifier}}")= g.identifier
                                             |, {{g.gene.organism.common_name}})
                                     table.table
                                         tr.no-top-border
@@ -74,22 +84,42 @@ block content
                 div.row
                     div.col-md-6
                         b Length: 
-                        span {{details.sequence|length}}bp
+                        span
+                            | {{details.sequence|length}}
+                            if details.type.name == 'Protein'
+                                | aa
+                            else
+                                | bp
                     div.col-md-6.text-right
                         a(href="http://genome-euro.ucsc.edu/cgi-bin/hgTracks?hgHubConnect.destUrl=..%2Fcgi-bin%2FhgTracks&clade=mammal&org=Naked+mole-rat&db=hetGla2&position={{details.position_from_identifier}}") View {{details.position_from_identifier}} on the UCSC Naked Mole-Rat Genome browser
-                <pre>>{{details.identifier}}
+                        span &nbsp;&nbsp;
+                        a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
+                <pre class="sequence">>{{details.identifier}}
                 {{details.sequence|default:"No sequence found"}}
                 </pre>
 
-            if details.related_sequences > 0
+            if details.related_sequences.count > 0
                 div.col-md-12
                     h2 Related Sequences
                     for seq in details.related_sequences.all
                         h3
-                            a(href="{% url 'annotation_details' seq.identifier %}") Sequence 
+                            a(href="{% url 'annotation_details' seq.identifier %}") {{ seq.identifier }}&nbsp;
                                 small= seq.type
+
+                        if seq.genes.count > 0 or seq.mirna_set.count > 0
+                            div.alert.alert-info
+                                if seq.genes.count > 0
+                                    i <b>{{ seq.genes.count }}</b> potential gene match{{ seq.genes.count|pluralize:"es" }}
+                                if seq.mirna_set.count > 0
+                                    i <b>{{ seq.mirna_set.count }}</b> potential miRNA match{{ seq.mirna_set.count|pluralize:"es" }}
+
                         b Length: 
-                        span {{seq.sequence|length}}bp
-                        <pre>>{{seq.identifier}}
+                        span
+                            | {{seq.sequence|length}}
+                            if seq.type.name == 'Protein'
+                                | aa
+                            else
+                                | bp
+                        <pre class="sequence">>{{seq.identifier}}
                         {{seq.sequence|default:"No sequence found"}}
                         </pre>

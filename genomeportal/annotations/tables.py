@@ -13,7 +13,11 @@ class SequenceTable(tables.Table):
 
     identifier = tables.LinkColumn('annotation_details', args=[A('identifier')])
     type = tables.Column()
-    gene = tables.Column(accessor=A('genes.all'), verbose_name='Gene', orderable=False)
+    gene = tables.Column(accessor=A('identifier'), verbose_name='Gene/miRNA', orderable=False)
 
     def render_gene(self, value):
-        return mark_safe(u''.join([u'<div>{}</div>'.format(v.gene.symbol) for v in value]))
+        if record.mirna_set.count() > 0:
+            output = u''.join([u'<div>{}</div>'.format(v.identifier) for v in record.mirna_set.all()])
+        else:
+            output = u''.join([u'<div>{} <small>({})</small></div>'.format(v.gene.symbol, v.gene.organism.common_name) for v in record.genes.all()])
+        return mark_safe(output)

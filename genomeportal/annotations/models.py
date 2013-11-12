@@ -7,6 +7,9 @@ class Organism(models.Model):
     name = models.CharField(max_length=50)
     common_name = models.CharField(max_length=50, blank=True, null=True)
 
+    def convert_for_url(self):
+        return self.name.replace(' ', '_')
+
     def __unicode__(self):
         if self.common_name != '':
             return self.common_name
@@ -15,7 +18,7 @@ class Organism(models.Model):
 
 class Gene(models.Model):
     entrez_id = models.PositiveIntegerField(db_index=True, null=True, blank=True)
-    name = models.CharField(max_length=255, db_index=True)
+    name = models.CharField(max_length=300, db_index=True)
     symbol = models.CharField(max_length=20, db_index=True)
     alias = models.CharField(max_length=50, blank=True, null=True, db_index=True)
     description = models.TextField(blank=True, null=True)
@@ -60,6 +63,12 @@ class Sequence(models.Model):
 
     def position_from_identifier(self):
         return self.identifier.split('_')[-1]
+
+    def __unicode__(self):
+        return self.identifier
+class miRNA(models.Model):
+    identifier = models.CharField(max_length=50)
+    sequences = models.ManyToManyField(Sequence)
 
     def __unicode__(self):
         return self.identifier
