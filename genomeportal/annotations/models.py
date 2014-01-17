@@ -66,6 +66,7 @@ class Sequence(models.Model):
 
     def __unicode__(self):
         return self.identifier
+
 class miRNA(models.Model):
     identifier = models.CharField(max_length=50)
     sequences = models.ManyToManyField(Sequence)
