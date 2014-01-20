@@ -22,7 +22,7 @@ class Command(BaseCommand):
         elif args[0] == 'proteins':
             self.load_proteins(args[1])
         elif args[0] == 'genes':
-            self.load_genes(args[1], args[2], args[3], args[4], args[5])
+            self.load_genes(args[1], args[2], args[3], args[4], args[5], args[6])
         elif args[0] == 'mirnas':
             self.load_mirnas(args[1])
         else:
@@ -73,7 +73,7 @@ class Command(BaseCommand):
         sequence_type,created = SequenceType.objects.get_or_create(name='Protein')
         self._parse_and_load_fasta(protein_file, sequence_type, is_complement=True, include_type_in_name=True)
 
-    def load_genes(self, match_file, details_file, species_name, species_common_name, taxonomy_id):
+    def load_genes(self, match_file, details_file, species_name, species_common_name, taxonomy_id, identifier_order):
         """
         Load genes. There may be multiple species so this can be run multiple times.
         The match file contains the actual gene matches, the details file is for info
@@ -90,23 +90,30 @@ class Command(BaseCommand):
             for row in csv.DictReader(df, delimiter="\t"):
                 details[row['Ensembl Protein ID']] = row
 
+            if identifier_order == 'external_first':
+                external = 'SEQ1'
+                internal = 'SEQ2'
+            else:
+                external = 'SEQ2'
+                internal = 'SEQ1'
+
             # Convert the match file to a dict with protein ID as key
             matches = {}
             for row in csv.DictReader(mf, delimiter="\t"):
-                if row['SEQ2'] not in matches:
-                    matches[row['SEQ2']] = []
-                matches[row['SEQ2']].append(row)
+                if row[internal] not in matches:
+                    matches[row[internal]] = []
+                matches[row[internal]].append(row)
 
             for s in sequences:
                 if s.identifier in matches:
                     match = matches[s.identifier]
                     for m in match:
-                        if m['SEQ1'] in details:
-                            dta = details[m['SEQ1']]
+                        if m[external] in details:
+                            dta = details[m[external]]
                             name = dta['Description'].split('[')
                             entrez_id = None if dta['EntrezGene ID'] == '' else dta['EntrezGene ID']
                             g, new = Gene.objects.get_or_create(name=name[0], symbol=dta['Associated Gene Name'], entrez_id=entrez_id, ensembl=dta['Ensembl Gene ID'], unigene=dta['Unigene ID'], uniprot=dta['UniProt/SwissProt ID'], organism=o)
-                            gm = GeneMatch(identifier=m['SEQ1'], protein_percentage_match=m['PROT_PERCENTID'], cdna_percentage_match=m['CDNA_PERCENTID'], ka=m['Ka'], ks=m['Ks'], ka_ks_ratio=m['Ka/Ks'], gene=g)
+                            gm = GeneMatch(identifier=m[external], protein_percentage_match=m['PROT_PERCENTID'], cdna_percentage_match=m['CDNA_PERCENTID'], ka=m['Ka'], ks=m['Ks'], ka_ks_ratio=m['Ka/Ks'], gene=g)
                             gm.save()
 
                             s.genes.add(gm)
