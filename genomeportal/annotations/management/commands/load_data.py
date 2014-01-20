@@ -112,7 +112,7 @@ class Command(BaseCommand):
                             dta = details[m[external]]
                             name = dta['Description'].split('[')
                             entrez_id = None if dta['EntrezGene ID'] == '' else dta['EntrezGene ID']
-                            g, new = Gene.objects.get_or_create(name=name[0], symbol=dta['Associated Gene Name'], entrez_id=entrez_id, ensembl=dta['Ensembl Gene ID'], unigene=dta['Unigene ID'], uniprot=dta['UniProt/SwissProt ID'], organism=o)
+                            g, new = Gene.objects.get_or_create(name=name[0], symbol=dta.get('Associated Gene Name'), entrez_id=entrez_id, ensembl=dta.get('Ensembl Gene ID'), unigene=dta.get('Unigene ID'), uniprot=dta.get('UniProt/SwissProt ID'), organism=o)
                             gm = GeneMatch(identifier=m[external], protein_percentage_match=m['PROT_PERCENTID'], cdna_percentage_match=m['CDNA_PERCENTID'], ka=m['Ka'], ks=m['Ks'], ka_ks_ratio=m['Ka/Ks'], gene=g)
                             gm.save()
 
