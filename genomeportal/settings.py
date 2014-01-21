@@ -2,7 +2,7 @@ import os
 
 from django.conf import global_settings
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__)) #'/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
+PROJECT_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'genomeportal') #'/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -65,7 +65,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = PROJECT_ROOT+'static/'
+STATIC_ROOT = PROJECT_ROOT+'/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -73,7 +73,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    PROJECT_ROOT+'resources',
+    PROJECT_ROOT+'/resources',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -114,7 +114,7 @@ ROOT_URLCONF = 'genomeportal.urls'
 WSGI_APPLICATION = 'genomeportal.wsgi.application'
 
 TEMPLATE_DIRS = (
-    PROJECT_ROOT+'templates',
+    PROJECT_ROOT+'/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
