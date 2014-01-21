@@ -15,7 +15,7 @@ def results(request):
     if term is not None and term != '':
         results_list = Sequence.objects.distinct().filter(Q(identifier__icontains=term) | Q(type__name=term) | Q(genes__gene__ensembl__icontains=term) | Q(genes__gene__symbol__icontains=term))
     else:
-        results_list = Sequence.objects.distinct().all()
+        results_list = Sequence.objects.all().distinct()
 
     if filter_gene == 'true':
         results_list = results_list.annotate(gene_count=Count('genes')).filter(gene_count__gt=0)

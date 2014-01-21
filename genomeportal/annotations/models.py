@@ -34,7 +34,7 @@ class Gene(models.Model):
         return self.symbol+' ('+self.name+')'
 
 class GeneMatch(models.Model):
-    identifier = models.CharField(max_length=50)
+    identifier = models.CharField(max_length=50, db_index=True)
     protein_percentage_match = models.FloatField()
     cdna_percentage_match = models.FloatField()
     ka = models.FloatField()
@@ -53,7 +53,7 @@ class SequenceType(models.Model):
         return self.name
 
 class Sequence(models.Model):
-    identifier = models.CharField(max_length=50)
+    identifier = models.CharField(max_length=50, db_index=True)
     sequence = models.TextField(blank=True, null=True)
 
     type = models.ForeignKey(SequenceType)
