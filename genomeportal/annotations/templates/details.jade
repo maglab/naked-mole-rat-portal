@@ -99,9 +99,6 @@ block content
                             else
                                 | bp
                     div.col-md-6.text-right
-                        if details.type.name == 'cDNA'
-                            a(href="http://genome-euro.ucsc.edu/cgi-bin/hgTracks?hgHubConnect.destUrl=..%2Fcgi-bin%2FhgTracks&clade=mammal&org=Naked+mole-rat&db=hetGla2&position={{details.position_from_identifier}}") View {{details.position_from_identifier}} on the UCSC Naked Mole-Rat Genome browser
-                        span &nbsp;&nbsp;
                         a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
                 <pre class="sequence">>{{details.identifier}}
                 {{sequence|default:"No sequence found"}}
