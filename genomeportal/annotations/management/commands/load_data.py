@@ -116,6 +116,8 @@ class Command(BaseCommand):
                             gm = GeneMatch(identifier=m[external], protein_percentage_match=m['PROT_PERCENTID'], cdna_percentage_match=m['CDNA_PERCENTID'], ka=m['Ka'], ks=m['Ks'], ka_ks_ratio=m['Ka/Ks'], gene=g)
                             gm.save()
 
+                            s.has_genes = True
+                            s.save()
                             s.genes.add(gm)
 
     def load_mirnas(self, mirna_file):

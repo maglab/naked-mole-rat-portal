@@ -13,14 +13,14 @@ def results(request):
     filter_type = request.GET.get('type')
 
     if term is not None and term != '':
-        results_list = Sequence.objects.defer('sequence').filter(Q(identifier__icontains=term) | Q(type__name=term) | Q(genes__gene__ensembl__icontains=term) | Q(genes__gene__symbol__icontains=term)).distinct()
+        results_list = Sequence.objects.defer('sequence').filter(Q(identifier__icontains=term) | Q(type__name=term) | Q(genes__gene__ensembl__icontains=term) | Q(genes__gene__symbol__icontains=term)).prefetch_related('genes').distinct()
     else:
-        results_list = Sequence.objects.defer('sequence').all().distinct()
+        results_list = Sequence.objects.defer('sequence').all().prefetch_related('genes').distinct()
 
     if filter_gene == 'true':
-        results_list = results_list.annotate(gene_count=Count('genes')).filter(gene_count__gt=0)
+        results_list = results_list.filter(has_genes=True) #.annotate(gene_count=Count('genes')).filter(gene_count__gt=0)
     elif filter_gene == 'false':
-        results_list = results_list.annotate(gene_count=Count('genes')).filter(gene_count=0)
+        results_list = results_list.filter(has_genes=False)#.annotate(gene_count=Count('genes')).filter(gene_count=0)
 
     if filter_type and filter_type != '':
         results_list = results_list.filter(type__name=filter_type)

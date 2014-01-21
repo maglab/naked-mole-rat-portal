@@ -60,6 +60,7 @@ class Sequence(models.Model):
     part_of = models.ForeignKey('self', related_name='related_sequences', blank=True, null=True)
 
     genes = models.ManyToManyField(GeneMatch, blank=True, null=True)
+    has_genes = models.BooleanField(default=False)
 
     def position_from_identifier(self):
         return self.identifier.split('_')[-1]
