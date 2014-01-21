@@ -1,3 +1,5 @@
+import os
+
 from django.conf import global_settings
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__)) #'/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
