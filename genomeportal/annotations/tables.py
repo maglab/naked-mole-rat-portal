@@ -19,5 +19,5 @@ class SequenceTable(tables.Table):
         if record.mirna_set.count() > 0:
             output = u''.join([u'<div>{}</div>'.format(v.identifier) for v in record.mirna_set.all()])
         else:
-            output = u''.join([u'<div>{} <small>({})</small></div>'.format(v.gene.symbol, v.gene.organism.common_name) for v in record.genes.all()])
+            output = u''.join([u'<div>{} <small>({})</small></div>'.format(v.gene.symbol if v.gene.symbol != '' else v.gene.ensembl, v.gene.organism.common_name) for v in record.genes.all()])
         return mark_safe(output)
