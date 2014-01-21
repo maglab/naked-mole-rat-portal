@@ -37,10 +37,7 @@ block content
                         div.panel.panel-default.panel-nmr
                             div.panel-heading
                                 h3
-                                    if g.gene.symbol != ''
-                                        | {{g.gene.symbol}}
-                                    else
-                                        | {{g.gene.ensembl}}
+                                    | {{g.gene.symbol}}
                                     small
                                         a(href="http://www.ensembl.org/{{ g.gene.organism.convert_for_url }}/Gene/Summary?db=core;g={{g.gene.ensembl}}")= g.gene.ensembl
                                         | &nbsp;({{g.gene.organism.common_name}})
