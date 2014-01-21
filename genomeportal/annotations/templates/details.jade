@@ -84,6 +84,11 @@ block content
             div.col-md-12
                 h2 Sequence 
                     small= details.type
+
+                if details.sequence|length > 10000
+                    div.row
+                        div.col-md-12
+                            p.alert.alert-warning Due to the length this sequence has been trucated to 20000 bases. Click the <a href="{% url 'raw_sequence' details.identifier %}">raw sequence</a> link for the complete sequence.
                 div.row
                     div.col-md-6
                         b Length: 
@@ -99,7 +104,7 @@ block content
                         span &nbsp;&nbsp;
                         a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
                 <pre class="sequence">>{{details.identifier}}
-                {{details.sequence|default:"No sequence found"}}
+                {{sequence|default:"No sequence found"}}
                 </pre>
 
             if details.related_sequences.count > 0

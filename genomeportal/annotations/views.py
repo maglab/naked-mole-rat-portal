@@ -46,8 +46,10 @@ def results(request):
 
 def details(request, identifier):
     details = get_object_or_404(Sequence, identifier=identifier)
+    sequence = details.sequence[0:20000]
     return render(request, 'details.jade', {
-        'details': details
+        'details': details,
+        'sequence': sequence,
     })
 
 def raw_sequence(request, identifier):
