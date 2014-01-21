@@ -1,6 +1,6 @@
 from django.conf import global_settings
 
-PROJECT_ROOT = '/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__)) #'/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
