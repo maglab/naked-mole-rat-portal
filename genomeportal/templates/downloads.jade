@@ -11,12 +11,21 @@ block content
     div.container
         div.row
             div.col-md-6
-                p This data may be freely downloaded and used in accordance with established pre-publication data sharing standards such as the Toronto agreement.
-
                 div.panel.panel-default
-                    p.panel-body: a(href="http://www.nature.com/nature/journal/v461/n7261/full/461168a.html") Prepublication data sharing, Nature 461, 168-170 (10 September 2009)
+                    div.panel-heading: strong dN/dS ratios
+                    div.panel-body
+                        p dN/dS ratios of naked mole-rat genes with mouse, rats guinea pig and human homologues are provided.
 
-                p In brief tRAWhe data can be freely used for small scale analysis without <a href="http://pcwww.liv.ac.uk/~aging/contact.html">contacting us</a> (e.g. studies focused on particular genes or regions, though please <a href="/about#how-to-cite-this-resource">cite our website as the source of the data</a>). We are further refining the data set so large scale analysis should be carried out in collaboration with the consortium or by <a href="http://pcwww.liv.ac.uk/~aging/contact.html">contacting us</a> as to avoid overlapping efforts.
+                        p This file will be available soon.
+                        //-a(href="/static/downloads/naked_mole_rat_dnds_ratios.zip") Download file (### Need file from Michael###)
+                        
+                div.panel.panel-default
+                    div.panel-heading: strong FASTA files
+                    div.panel-body
+                        a#FASTA
+                        p FASTA files with scaffolds, genes and proteins are provided.
+
+                        a(href="/static/downloads/naked_mole_rat_fasta_files.zip") Download file
 
             div.col-md-6
                 div.panel.panel-default
@@ -30,15 +39,16 @@ block content
                         a(href="/static/downloads/naked_mole_rat_blast_database.zip") Download file
 
                 div.panel.panel-default
-                    div.panel-heading: strong FASTA files
+                    div.panel-heading: strong TGAC genome
                     div.panel-body
-                        a#FASTA
-                        p The FASTA file is provided as a zip file for compression. It contains a FASTA file with all contigs with a length greater than 500 bases.
+                        a#TGAC
+                        p A FASTA file is provided with all contigs with a length greater than 500 bases from the genome sequence performed at TGAC.
 
-                        a(href="/static/downloads/naked_mole_rat_contigs.zip") Download file
-
+                        a(href="/static/downloads/naked_mole_rat_contigs.zip") Download file                        
+                        
                 div.panel.panel-default
                     div.panel-heading: strong Raw reads
                     div.panel-body
                         a#RAW
-                        p We are in the process of submitting the raw reads to the EBI Short Read Archive. Once they are available a link will be provided here; In the meantime if you wish to employ this data please <a href="http://pcwww.liv.ac.uk/~aging/contact.html">contact us directly</a>.
+                        p All the naked mole rat genome data is available through the NCBI using accession <a href="http://www.ncbi.nlm.nih.gov/bioproject/197330">PRJNA197330</a>.
+

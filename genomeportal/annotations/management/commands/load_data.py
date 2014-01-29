@@ -25,10 +25,12 @@ class Command(BaseCommand):
             self.load_genes(args[1], args[2], args[3], args[4], args[5], args[6])
         elif args[0] == 'mirnas':
             self.load_mirnas(args[1])
+        elif args[0] == 'mrna_identifiers':
+            self.load_mrna_identifiers(args[1])
         else:
             self.stdout.write('Type not recognised')
 
-    def _parse_and_load_fasta(self, fasta_file, sequence_type, include_type_in_name=False, mapping_file=False, is_complement=False):
+    def _parse_and_load_fasta(self, fasta_file, sequence_type, include_type_in_name=False, mapping_file=False, is_complement=False, suffix='cDNA'):
         mapping = {}
         if mapping_file:
             # Map one object to another via identifier in file
@@ -42,7 +44,7 @@ class Command(BaseCommand):
                 if seq_id in mapping:
                     part_of = Sequence.objects.get(identifier=mapping[seq_id])
                 elif is_complement:
-                    part_of = Sequence.objects.get(identifier=seq_id)
+                    part_of = Sequence.objects.get(identifier='{}.{}'.format(seq_id, suffix))
                 else:
                     part_of = None
                 if include_type_in_name:
@@ -64,14 +66,14 @@ class Command(BaseCommand):
         Load cDNA sequences. These map to scaffolds.
         """
         sequence_type,created = SequenceType.objects.get_or_create(name='cDNA')
-        self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file)
+        self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, include_type_in_name=True)
 
     def load_proteins(self, protein_file):
         """
         Load protein sequences. These map to cDNA sequences.
         """
         sequence_type,created = SequenceType.objects.get_or_create(name='Protein')
-        self._parse_and_load_fasta(protein_file, sequence_type, is_complement=True, include_type_in_name=True)
+        self._parse_and_load_fasta(protein_file, sequence_type, is_complement=True)
 
     def load_genes(self, match_file, details_file, species_name, species_common_name, taxonomy_id, identifier_order):
         """
@@ -136,3 +138,13 @@ class Command(BaseCommand):
                 if r['example miRBase miRNA with the same seed'] != '-':
                     mi,c = miRNA.objects.get_or_create(identifier=r['example miRBase miRNA with the same seed'])
                     mi.sequences.add(s)
+
+    def load_mrna_identifiers(self, mrna_mapping_file, suffix='cDNA'):
+        with open(mrna_mapping_file) as mrna_file:
+            for line in csv.reader(mrna_file):
+                try:
+                    seq = Sequence.objects.get(identifier='{}.{}'.format(line[0],suffix))
+                    seq.part_of_mrna = line[1]
+                    seq.save()
+                except:
+                    pass

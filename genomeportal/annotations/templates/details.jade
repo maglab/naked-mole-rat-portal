@@ -8,7 +8,12 @@ block content
         div.container
             h1 
                 | Sequence details
-                small {{details.identifier}} ({{details.type.name}})
+                small
+                    if details.type.name == 'Protein'
+                        a(href="http://www.ncbi.nlm.nih.gov/protein/{{details.identifier}}") {{details.identifier}}
+                    else
+                        a(href="http://www.ncbi.nlm.nih.gov/nuccore/{{details.identifier}}") {{details.identifier}}
+                    | ({{details.type.name}})
     div.page.container
         div.row
             div.col-md-12
