@@ -51,7 +51,7 @@ class Command(BaseCommand):
                 else:
                     part_of = None
                 if include_type_in_name:
-                    identifier = '{}.{}'.format(seq_id, sequence_type.name.lower())
+                    identifier = '{}.{}'.format(seq_id, sequence_type.name)
                 else:
                     identifier = seq_id
                 s = Sequence(identifier=identifier, sequence=unicode(seq.seq), type=sequence_type, part_of=part_of)
