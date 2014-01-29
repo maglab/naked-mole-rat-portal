@@ -44,7 +44,10 @@ class Command(BaseCommand):
                 if seq_id in mapping:
                     part_of = Sequence.objects.get(identifier=mapping[seq_id])
                 elif is_complement:
-                    part_of = Sequence.objects.get(identifier='{}.{}'.format(seq_id, suffix))
+                    try:
+                        part_of = Sequence.objects.get(identifier='{}.{}'.format(seq_id, suffix))
+                    except:
+                        part_of = None
                 else:
                     part_of = None
                 if include_type_in_name:
