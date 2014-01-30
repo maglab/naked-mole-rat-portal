@@ -110,8 +110,9 @@ class Command(BaseCommand):
                 matches[row[internal]].append(row)
 
             for s in sequences:
-                if s.identifier in matches:
-                    match = matches[s.identifier]
+                identifier = s.rsplit('.', 1)[0]
+                if identifier in matches:
+                    match = matches[identifier]
                     for m in match:
                         if m[external] in details:
                             dta = details[m[external]]
