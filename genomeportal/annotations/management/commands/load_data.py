@@ -110,7 +110,7 @@ class Command(BaseCommand):
                 matches[row[internal]].append(row)
 
             for s in sequences:
-                identifier = s.rsplit('.', 1)[0]
+                identifier = s.identifier.rsplit('.', 1)[0]
                 if identifier in matches:
                     match = matches[identifier]
                     for m in match:
