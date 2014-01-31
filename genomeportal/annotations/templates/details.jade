@@ -101,7 +101,10 @@ block content
                 if details.type.name == 'cDNA'
                     div.row
                         div.col-md-12
-                            p.alert.alert-info You can <a href="/blast">BLAST this sequence</a> against the scaffolds to get genomic coordinates
+                            form(action="/blast", method="post").alert.alert-nmr 
+                                input(type="hidden", name="seq", value="{{details.sequence}}")
+                                input(type="hidden", name="db", value="Naked Mole-Rat scaffold sequences")
+                                You can <button type="submit" class="btn">BLAST this sequence</button> against the scaffolds to get genomic coordinates
                 div.row
                     div.col-md-6
                         b Length: 
