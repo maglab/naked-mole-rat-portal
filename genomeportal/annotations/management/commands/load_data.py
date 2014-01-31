@@ -145,7 +145,7 @@ class Command(BaseCommand):
 
     def load_mrna_identifiers(self, mrna_mapping_file, suffix='cDNA'):
         with open(mrna_mapping_file) as mrna_file:
-            for line in csv.reader(mrna_file):
+            for line in csv.reader(mrna_file, delimiter="\t"):
                 try:
                     seq = Sequence.objects.get(identifier='{}.{}'.format(line[0],suffix))
                     seq.part_of_mrna = line[1]
