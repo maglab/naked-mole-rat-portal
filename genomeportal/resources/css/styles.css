@@ -6014,3 +6014,11 @@ a.homepage-search-container-link {
   font-weight: 200;
   border-bottom: 1px solid #eee;
 }
+.sequence {
+  max-height: 50em;
+  overflow: scroll;
+}
+.alert-nmr {
+  border-color: #918181;
+  background-color: #b09d9d;
+}
