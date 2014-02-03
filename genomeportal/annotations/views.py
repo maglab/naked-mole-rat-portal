@@ -32,7 +32,7 @@ def results(request):
     end = results.page.number+3 if results.page.number+3 < results.page.end_index()+1 else results.page.end_index()+1
     pages = results.page.paginator.page_range[start:end]
 
-    gene_pres_options = (('true', 'Has gene matches'), ('false', 'No gene matches'))
+    gene_pres_options = (('true', 'Show only high confidence gene matches'), ('false', 'Show only low confidence gene matches'))
 
     return render(request, 'results.jade', {
         'results': results,

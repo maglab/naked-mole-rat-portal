@@ -55,7 +55,11 @@ class SequenceType(models.Model):
 class Sequence(models.Model):
     identifier = models.CharField(max_length=50, db_index=True)
     sequence = models.TextField(blank=True, null=True)
-    part_of_mrna = models.CharField(max_length=15, null=True, blank=True)
+
+    ncbi_symbol = models.CharField(max_length=20, null=True)
+    ncbi_name = models.CharField(max_length=255, null=True)
+    entrez_id = models.IntegerField(null=True)
+    ncbi_predicted = models.BooleanField(default=False)
 
     type = models.ForeignKey(SequenceType)
     part_of = models.ForeignKey('self', related_name='related_sequences', blank=True, null=True)
