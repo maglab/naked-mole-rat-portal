@@ -50,7 +50,11 @@ class Command(BaseCommand):
             for seq in SeqIO.parse(fasta, 'fasta'):
                 seq_id = seq.id.strip('|').split('|')[-1]
                 if seq_id in mapping:
-                    part_of = Sequence.objects.get(identifier=mapping[seq_id])
+                    try:
+                        part_of = Sequence.objects.get(identifier=mapping[seq_id])
+                    except:
+                        part_of = None
+                        
                 elif is_complement:
                     try:
                         part_of = Sequence.objects.get(identifier='{}'.format(seq_id))
