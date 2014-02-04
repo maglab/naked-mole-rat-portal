@@ -18,7 +18,7 @@ class Command(BaseCommand):
         if args[0] == 'scaffolds':
             self.load_scaffolds(args[1])
         elif args[0] == 'cdna':
-            self.load_cds(args[1], args[2])
+            self.load_cds(args[1], args[2], args[3])
         elif args[0] == 'proteins':
             self.load_proteins(args[1])
         elif args[0] == 'genes':
@@ -30,7 +30,7 @@ class Command(BaseCommand):
         else:
             self.stdout.write('Type not recognised')
 
-    def _parse_and_load_fasta(self, fasta_file, sequence_type, include_type_in_name=False, mapping_file=False, is_complement=False, suffix='cDNA'):
+    def _parse_and_load_fasta(self, fasta_file, sequence_type, mapping_file=False, is_complement=False, no_sequence=False, map_protein_to_gene=False):
         mapping = {}
         if mapping_file:
             # Map one object to another via identifier in file
@@ -38,6 +38,14 @@ class Command(BaseCommand):
                 for l in mf:
                     r = l.split("\t")
                     mapping[r[0]] = r[1].strip()
+
+        if map_protein_to_gene:
+            protein_to_gene = {}
+            with open(map_protein_to_gene) as pgf:
+                for l in pgf:
+                    r = l.split("\t")
+                    protein_to_gene[r[0]] = r
+
         with open(fasta_file) as fasta:
             for seq in SeqIO.parse(fasta, 'fasta'):
                 seq_id = seq.id.strip('|').split('|')[-1]
@@ -45,16 +53,33 @@ class Command(BaseCommand):
                     part_of = Sequence.objects.get(identifier=mapping[seq_id])
                 elif is_complement:
                     try:
-                        part_of = Sequence.objects.get(identifier='{}.{}'.format(seq_id, suffix))
+                        part_of = Sequence.objects.get(identifier='{}'.format(seq_id))
                     except:
                         part_of = None
                 else:
                     part_of = None
-                if include_type_in_name:
-                    identifier = '{}.{}'.format(seq_id, sequence_type.name)
+
+                ncbi_symbol = None
+                ncbi_name = None
+                ncbi_predicted = False
+                description = seq.description.split('|')[-1].strip()
+                if description.startswith('PREDICTED:'):
+                    ncbi_predicted = True
+                if map_protein_to_gene:
+                    identifier = map_protein_to_gene[seq_id][1]
+                    ncbi_symbol = map_protein_to_gene[seq_id][2]
+                    ncbi_name = map_protein_to_gene[seq_id][3]
                 else:
                     identifier = seq_id
-                s = Sequence(identifier=identifier, sequence=unicode(seq.seq), type=sequence_type, part_of=part_of)
+                    ncbi_name = description
+
+                if no_sequence:
+                    seq_string = None
+                else:
+                    seq_string = unicode(seq.seq)
+                    
+                #print identifier, seq_string, ncbi_name, ncbi_symbol, ncbi_predicted
+                s = Sequence(identifier=identifier, sequence=seq_string, type=sequence_type, part_of=part_of, ncbi_name=ncbi_name, ncbi_symbol=ncbi_symbol, ncbi_predicted=ncbi_predicted)
                 s.save()
 
     def load_scaffolds(self, scaffold_file):
@@ -62,14 +87,14 @@ class Command(BaseCommand):
         Load scaffold sequences in. These are base sequences and have no mapping
         """
         sequence_type,created = SequenceType.objects.get_or_create(name='Scaffold')
-        self._parse_and_load_fasta(scaffold_file, sequence_type)
+        self._parse_and_load_fasta(scaffold_file, sequence_type, no_sequence=True)
 
-    def load_cds(self, cds_file, mapping_file):
+    def load_cds(self, cds_file, mapping_file, map_protein_to_gene):
         """
         Load cDNA sequences. These map to scaffolds.
         """
-        sequence_type,created = SequenceType.objects.get_or_create(name='cDNA')
-        self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, include_type_in_name=True)
+        sequence_type,created = SequenceType.objects.get_or_create(name='Coding sequence')
+        self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, map_protien_to_gene=map_protein_to_gene)
 
     def load_proteins(self, protein_file):
         """

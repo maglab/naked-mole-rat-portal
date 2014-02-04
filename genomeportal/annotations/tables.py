@@ -34,8 +34,10 @@ class SequenceTable(tables.Table):
 
     def render_gene(self, value, record):
         output = ''
-        if record.ncbi_symbol is not None and record.ncbi_symbol != '':
+        if record.ncbi_symbol is not None:
             output += u'<div>{} <small>({})</small></div>'.format(record.ncbi_symbol, 'NCBI Annotation')
+        elif record.ncbi_name is not None:
+            output += u'<div>{} <small>({})</small></div>'.format(record.ncbi_name, 'NCBI Annotation')
         if record.mirna_set.count() > 0:
             output += u''.join([u'<div>{}</div>'.format(v.identifier) for v in record.mirna_set.all()])
         else:
