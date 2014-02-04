@@ -94,7 +94,7 @@ class Command(BaseCommand):
         Load cDNA sequences. These map to scaffolds.
         """
         sequence_type,created = SequenceType.objects.get_or_create(name='Coding sequence')
-        self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, map_protien_to_gene=map_protein_to_gene)
+        self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, map_protein_to_gene=map_protein_to_gene)
 
     def load_proteins(self, protein_file):
         """
