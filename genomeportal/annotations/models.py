@@ -47,7 +47,7 @@ class GeneMatch(models.Model):
         return u'{0} ({1})'.format(self.identifier, self.gene.symbol)
 
 class SequenceType(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.name
