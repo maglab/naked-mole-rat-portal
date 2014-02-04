@@ -66,9 +66,9 @@ class Command(BaseCommand):
                 if description.startswith('PREDICTED:'):
                     ncbi_predicted = True
                 if map_protein_to_gene:
-                    identifier = map_protein_to_gene[seq_id][1]
-                    ncbi_symbol = map_protein_to_gene[seq_id][2]
-                    ncbi_name = map_protein_to_gene[seq_id][3]
+                    identifier = protein_to_gene[seq_id][1]
+                    ncbi_symbol = protein_to_gene[seq_id][2]
+                    ncbi_name = protein_to_gene[seq_id][3]
                 else:
                     identifier = seq_id
                     ncbi_name = description
