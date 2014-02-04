@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 if map_protein_to_gene:
                     identifier = protein_to_gene[seq_id][1]
                     ncbi_symbol = protein_to_gene[seq_id][2]
-                    ncbi_name = protein_to_gene[seq_id][3]
+                    ncbi_name = protein_to_gene[seq_id][3].strip()
                 else:
                     identifier = seq_id
                     ncbi_name = description
