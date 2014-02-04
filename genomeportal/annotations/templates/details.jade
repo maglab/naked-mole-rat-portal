@@ -15,42 +15,41 @@ block content
                         a(href="http://www.ncbi.nlm.nih.gov/protein/{{details.identifier}}") {{details.identifier}}
                     |&nbsp;({{details.type.name}})
     div.page.container
-        if details.type.name != 'Scaffold'
-            div.row
-                div.col-md-6
-                    h2 Details from NCBI annotation
+        div.row
+            div.col-md-6
+                h2 Details from NCBI annotation
 
-                    table.table
-                        tbody
-                            tr.no-top-border
-                                th Gene Symbol
-                                td {{details.ncbi_symbol}}
+                table.table
+                    tbody
+                        tr.no-top-border
+                            th Gene Symbol
+                            td {{details.ncbi_symbol}}
+                        tr
+                            th Gene Name
+                            td {{details.ncbi_name}}
+                        if details.entrez_id
                             tr
-                                th Gene Name
-                                td {{details.ncbi_name}}
-                            if details.entrez_id
-                                tr
-                                    th Entrez Gene ID
-                                    td: a(href="http://www.ncbi.nlm.nih.gov/gene/{{details.entrez_id}}") {{details.entrez_id}}
-                div.col-md-6
-                    if details.part_of
-                        h2 Database interlinks
-                        div.panel.panel-defaul.panel-nmr 
-                            div.panel-heading Part of {{details.part_of.identifier}} ({{details.part_of.type}})
+                                th Entrez Gene ID
+                                td: a(href="http://www.ncbi.nlm.nih.gov/gene/{{details.entrez_id}}") {{details.entrez_id}}
+            div.col-md-6
+                if details.part_of
+                    h2 Database interlinks
+                    div.panel.panel-defaul.panel-nmr 
+                        div.panel-heading Part of {{details.part_of.identifier}} ({{details.part_of.type}})
+                        div.panel-body
+                            if details.part_of.genes.count > 0
+                                p There are <b>{{ details.part_of.genes.count }}</b> potential gene matches.
+                            p For more information consult the 
+                                a(href="{% url 'annotation_details' details.part_of.identifier %}") page for {{details.part_of.identifier}} ({{details.part_of.type}}) 
+                if details.mirna_set.count > 0
+                    h2 Potential miRNA matches
+                    for m in details.mirna_set.all
+                        div.panel.panel-default.panel-nmr
+                            div.panel-heading
+                                h3 {{ m.identifier }}
                             div.panel-body
-                                if details.part_of.genes.count > 0
-                                    p There are <b>{{ details.part_of.genes.count }}</b> potential gene matches.
-                                p For more information consult the 
-                                    a(href="{% url 'annotation_details' details.part_of.identifier %}") page for {{details.part_of.identifier}} ({{details.part_of.type}}) 
-                    if details.mirna_set.count > 0
-                        h2 Potential miRNA matches
-                        for m in details.mirna_set.all
-                            div.panel.panel-default.panel-nmr
-                                div.panel-heading
-                                    h3 {{ m.identifier }}
-                                div.panel-body
-                                    div.col-md-12
-                                        a(href="http://www.mirbase.org/cgi-bin/mirna_entry.pl?id={{ m.identifier }}") View details on miRBase.
+                                div.col-md-12
+                                    a(href="http://www.mirbase.org/cgi-bin/mirna_entry.pl?id={{ m.identifier }}") View details on miRBase.
 
         div.row
             div.col-md-12
@@ -102,35 +101,32 @@ block content
                                             th Ka/Ks Ratio
                                             td {{g.ka_ks_ratio}} (Ka = {{g.ka}}, Ks = {{g.ks}})
 
-            div.col-md-12
-                h2 Sequence 
-                    small= details.type
+            if details.sequence != '' and details.sequence != None
+                div.col-md-12
+                    h2 Sequence 
+                        small= details.type
 
-                if details.sequence|length > 10000
-                    div.row
-                        div.col-md-12
-                            p.alert.alert-warning Due to the length this sequence has been trucated to 20000 bases. Click the <a href="{% url 'raw_sequence' details.identifier %}">raw sequence</a> link for the complete sequence.
-                if details.type.name == 'cDNA'
+                if details.type.name == 'Coding Sequence'
                     div.row
                         div.col-md-12
                             form(action="/blast/", method="post").alert.alert-nmr 
                                 input(type="hidden", name="seq", value="{{details.sequence}}")
                                 input(type="hidden", name="db", value="Naked Mole-Rat scaffold sequences")
                                 | You can <button type="submit" class="btn btn-default btn-sm">BLAST this sequence</button> against the scaffolds to get genomic coordinates
-                div.row
-                    div.col-md-6
-                        b Length: 
-                        span
-                            | {{details.sequence|length}}
-                            if details.type.name == 'Protein'
-                                | aa
-                            else
-                                | bp
-                    div.col-md-6.text-right
-                        a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
-                <pre class="sequence">>{{details.identifier}}
-                {{sequence|default:"No sequence found"}}
-                </pre>
+                    div.row
+                        div.col-md-6
+                            b Length: 
+                            span
+                                | {{details.sequence|length}}
+                                if details.type.name == 'Protein'
+                                    | aa
+                                else
+                                    | bp
+                        div.col-md-6.text-right
+                            a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
+                    <pre class="sequence">>{{details.identifier}}
+                    {{sequence|default:"No sequence found"}}
+                    </pre>
 
             if details.related_sequences.count > 0
                 div.col-md-12
