@@ -20,7 +20,7 @@ class Command(BaseCommand):
         elif args[0] == 'cdna':
             self.load_cds(args[1], args[2], args[3])
         elif args[0] == 'proteins':
-            self.load_proteins(args[1])
+            self.load_proteins(args[1], args[2])
         elif args[0] == 'genes':
             self.load_genes(args[1], args[2], args[3], args[4], args[5], args[6])
         elif args[0] == 'mirnas':
@@ -96,12 +96,12 @@ class Command(BaseCommand):
         sequence_type,created = SequenceType.objects.get_or_create(name='Coding sequence')
         self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, map_protein_to_gene=map_protein_to_gene)
 
-    def load_proteins(self, protein_file):
+    def load_proteins(self, protein_file, mapping_file):
         """
         Load protein sequences. These map to cDNA sequences.
         """
         sequence_type,created = SequenceType.objects.get_or_create(name='Protein')
-        self._parse_and_load_fasta(protein_file, sequence_type, is_complement=True)
+        self._parse_and_load_fasta(protein_file, sequence_type, is_complement=True, mapping_file=mapping_file)
 
     def load_genes(self, match_file, details_file, species_name, species_common_name, taxonomy_id, identifier_order):
         """
