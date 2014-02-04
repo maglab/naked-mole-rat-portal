@@ -114,7 +114,7 @@ class Command(BaseCommand):
         from ensembl to create the gene objects. Taxonomy ID is from the NCBI.
         """
         with open(details_file) as df, open(match_file) as mf:
-            sequences = Sequence.objects.filter(type__name='cDNA')
+            sequences = Sequence.objects.filter(type__name='Coding sequence')
             o,c = Organism.objects.get_or_create(taxonomy_id=taxonomy_id, name=species_name, common_name=species_common_name)
 
             # Turn the details file into a dict with protein ID as key. 
