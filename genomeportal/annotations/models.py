@@ -56,7 +56,7 @@ class Sequence(models.Model):
     identifier = models.CharField(max_length=50, db_index=True)
     sequence = models.TextField(blank=True, null=True)
 
-    ncbi_symbol = models.CharField(max_length=20, null=True)
+    ncbi_symbol = models.CharField(max_length=30, null=True)
     ncbi_name = models.CharField(max_length=255, null=True)
     entrez_id = models.IntegerField(null=True)
     ncbi_predicted = models.BooleanField(default=False)
