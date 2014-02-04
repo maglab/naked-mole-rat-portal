@@ -21,9 +21,10 @@ block content
 
                 table.table
                     tbody
-                        tr.no-top-border
-                            th Gene Symbol
-                            td {{details.ncbi_symbol}}
+                        if details.ncbi_symbol
+                            tr.no-top-border
+                                th Gene Symbol
+                                td {{details.ncbi_symbol}}
                         tr
                             th Gene Name
                             td {{details.ncbi_name}}
