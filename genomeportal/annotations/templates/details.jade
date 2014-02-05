@@ -114,20 +114,20 @@ block content
                                 input(type="hidden", name="seq", value="{{details.sequence}}")
                                 input(type="hidden", name="db", value="Naked Mole-Rat scaffold sequences")
                                 | You can <button type="submit" class="btn btn-default btn-sm">BLAST this sequence</button> against the scaffolds to get genomic coordinates
-                    div.row
-                        div.col-md-6
-                            b Length: 
-                            span
-                                | {{details.sequence|length}}
-                                if details.type.name == 'Protein'
-                                    | aa
-                                else
-                                    | bp
-                        div.col-md-6.text-right
-                            a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
-                    <pre class="sequence">>{{details.identifier}}
-                    {{sequence|default:"No sequence found"}}
-                    </pre>
+                div.row
+                    div.col-md-6
+                        b Length: 
+                        span
+                            | {{details.sequence|length}}
+                            if details.type.name == 'Protein'
+                                | aa
+                            else
+                                | bp
+                    div.col-md-6.text-right
+                        a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
+                <pre class="sequence">>{{details.identifier}}
+                {{sequence|default:"No sequence found"}}
+                </pre>
 
             if details.related_sequences.count > 0
                 div.col-md-12
