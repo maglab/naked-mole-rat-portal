@@ -14,6 +14,9 @@ block content
                     else
                         a(href="http://www.ncbi.nlm.nih.gov/protein/{{details.identifier}}") {{details.identifier}}
                     |&nbsp;({{details.type.name}})
+                    if details.genes.count > 0
+                        | &nbsp;
+                        span.highlight High Confidence
     div.page.container
         div.row
             div.col-md-6
