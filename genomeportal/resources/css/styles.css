@@ -6022,7 +6022,8 @@ a.homepage-search-container-link {
   border-color: #918181;
   background-color: #b09d9d;
 }
-tr.highlight {
+tr.highlight td.identifier,
+tr.highlight td.gene {
   font-weight: bold;
 }
 tr.highlight td.gene:before {

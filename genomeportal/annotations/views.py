@@ -13,7 +13,7 @@ def results(request):
     filter_type = request.GET.get('type')
 
     if term is not None and term != '':
-        results_list = Sequence.objects.defer('sequence').filter(Q(identifier__icontains=term) | Q(type__name=term) | Q(genes__gene__ensembl__icontains=term) | Q(genes__gene__symbol__icontains=term)).prefetch_related('genes').distinct()
+        results_list = Sequence.objects.defer('sequence').filter(Q(identifier__icontains=term) | Q(type__name=term) | Q(genes__gene__ensembl__icontains=term) | Q(genes__gene__symbol__icontains=term) | Q(ncbi_symbol__icontains=term) | Q(ncbi_name__icontains=term) | Q(entrez_id__icontains=term)).prefetch_related('genes').distinct()
     else:
         results_list = Sequence.objects.defer('sequence').all().prefetch_related('genes').distinct()
 

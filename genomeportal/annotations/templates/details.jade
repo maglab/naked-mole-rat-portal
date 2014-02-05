@@ -88,7 +88,7 @@ block content
                                     h4 
                                         | Gene match
                                         small
-                                            |(Ensembl Protien ID:
+                                            |(Ensembl Protein ID:
                                             a(href="http://www.ensembl.org/{{ g.gene.organism.convert_for_url }}/Gene/Summary?db=core;p={{g.identifier}}")= g.identifier
                                             |, {{g.gene.organism.common_name}})
                                     table.table
@@ -107,7 +107,7 @@ block content
                     h2 Sequence 
                         small= details.type
 
-                if details.type.name == 'Coding Sequence'
+                if details.type.name == 'Coding sequence'
                     div.row
                         div.col-md-12
                             form(action="/blast/", method="post").alert.alert-nmr 
