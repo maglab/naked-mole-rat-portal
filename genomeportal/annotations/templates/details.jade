@@ -137,9 +137,9 @@ block content
                             a(href="{% url 'annotation_details' seq.identifier %}") {{ seq.identifier }}&nbsp;
                                 small= seq.type
                         p 
-                            if seq.ncbi_symbol != ''
+                            if seq.ncbi_symbol != None
                                 b {{seq.ncbi_symbol}}
-                            if seq.ncbi_name != ''
+                            if seq.ncbi_name != None
                                 | &nbsp;{{seq.ncbi_name}}
 
                         if seq.genes.count > 0 or seq.mirna_set.count > 0
