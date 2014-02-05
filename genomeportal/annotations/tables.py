@@ -11,7 +11,7 @@ class HighlightBoundRows(BoundRows):
     def __iter__(self):
         for record in self.data:
             row = BoundRow(record, table=self.table)
-            if record.has_genes:
+            if record.has_genes or (record.part_of is not None and record.part_of.has_genes):
                 row.style = 'highlight'
             yield row
 
