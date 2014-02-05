@@ -1,4 +1,5 @@
 from django.utils.safestring import mark_safe
+from django.core.urlresolvers import reverse
 
 import django_tables2 as tables
 from django_tables2 import A
@@ -34,6 +35,8 @@ class SequenceTable(tables.Table):
 
     def render_gene(self, value, record):
         output = ''
+        if record.part_of and record.part_of.type.name != 'Scaffold':
+            output += '<span class="highlight-related">Part of <a href="{0}">{1}</a></span>'.format(reverse('genomeportal.annotations.views.details', args=(record.part_of.identifier,)), record.part_of.identifier)
         if record.ncbi_symbol is not None:
             output += u'<div>{} <small>({})</small></div>'.format(record.ncbi_symbol, 'NCBI Annotation')
         elif record.ncbi_name is not None:

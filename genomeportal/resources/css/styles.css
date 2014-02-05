@@ -6033,3 +6033,11 @@ tr.highlight td.gene:before {
   display: inline-block;
   float: right;
 }
+.highlight-related {
+  font-weight: bold;
+  font-size: 0.8em;
+  background: #D5EDFC;
+  padding: 0.25em 0.5em;
+  display: inline-block;
+  float: right;
+}
