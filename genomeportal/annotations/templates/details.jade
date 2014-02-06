@@ -59,7 +59,7 @@ block content
             div.row
                 div.col-md-12
                         h2 Potential Gene Matches
-                        p The following genes have been identified as possible homologs in this organism.
+                        p The following genes have been identified as possible homologs of the naked mole-rat gene and compared to it.
                         for g in details.genes.all
                             div.panel.panel-default.panel-nmr
                                 div.panel-heading
@@ -99,7 +99,7 @@ block content
                                                 th Protein Percentage
                                                 td {{g.protein_percentage_match}}%
                                             tr
-                                                th cDNA percentage
+                                                th CDS percentage
                                                 td {{g.cdna_percentage_match}}%
                                             tr
                                                 th Ka/Ks Ratio
