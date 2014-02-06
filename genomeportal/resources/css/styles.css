@@ -6026,7 +6026,7 @@ tr.highlight {
   font-weight: bold;
 }
 tr.highlight td.gene:before {
-  content: "High Confidence";
+  content: "Best Hit";
   font-size: 0.8em;
   background: #BDBC95;
   padding: 0.25em 0.5em;
