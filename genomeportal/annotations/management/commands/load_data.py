@@ -31,6 +31,8 @@ class Command(BaseCommand):
             self.load_noncoding(args[1])
         elif args[0] == 'entrez_ids':
             self.load_entrez(args[1])
+        elif args[0] == 'genage_links':
+            self.load_genage(args[1])
         else:
             self.stdout.write('Type not recognised')
 
@@ -212,3 +214,14 @@ class Command(BaseCommand):
                     seq.save()
                 except:
                     pass
+
+    def load_genage(self, geange_file):
+        """
+        Indicate if the gene is present in GenAge
+        """
+        with open(genage_file) as gf:
+            for line in csv.reader(gf):
+                genes = Sequence.objects.filter(ncbi_symbol=line[0])
+                for g in genes:
+                    g.in_genage = True
+                    g.save()
