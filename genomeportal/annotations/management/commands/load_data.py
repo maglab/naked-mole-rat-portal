@@ -195,6 +195,7 @@ class Command(BaseCommand):
             for line in csv.reader(nf, delimiter="\t"):
                 part_of = Sequence.objects.get(identifier=line[3])
                 ncbi_predicted = False
+                description = seq.description.split('|')[-1].strip()
                 if description.startswith('PREDICTED:'):
                     ncbi_predicted = True
                 s = Sequence(identifier=line[0], sequence=line[4], type=sequence_type, part_of=part_of, ncbi_name=line[2], ncbi_symbol=line[1], ncbi_predicted=ncbi_predicted)
