@@ -27,6 +27,10 @@ class Command(BaseCommand):
             self.load_mirnas(args[1])
         elif args[0] == 'mrna_identifiers':
             self.load_mrna_identifiers(args[1])
+        elif args[0] == 'noncoding':
+            self.load_noncoding(args[1])
+        elif args[0] == 'entrez_ids':
+            self.load_entrez(args[1])
         else:
             self.stdout.write('Type not recognised')
 
@@ -178,6 +182,33 @@ class Command(BaseCommand):
                 try:
                     seq = Sequence.objects.get(identifier='{}.{}'.format(line[0],suffix))
                     seq.part_of_mrna = line[1]
+                    seq.save()
+                except:
+                    pass
+
+    def load_noncoding(self, noncoding_file):
+        """
+        Load non-coding sequences. These map to scaffolds
+        """
+        sequence_type,created = SequenceType.objects.get_or_create(name='Non-coding sequence')
+        with open(noncoding_file) as nf:
+            for line in csv.reader(nf, delimiter="\t"):
+                part_of = Sequence.objects.get(identifier=line[3])
+                ncbi_predicted = False
+                if description.startswith('PREDICTED:'):
+                    ncbi_predicted = True
+                s = Sequence(identifier=line[0], sequence=line[4], type=sequence_type, part_of=part_of, ncbi_name=line[2], ncbi_symbol=line[1], ncbi_predicted=ncbi_predicted)
+                s.save()
+
+    def load_entrez(self, entrez_file):
+        """
+        Load entrez ids into genes.
+        """
+        with open(entrez_file) as ef:
+            for line in csv.reader(ef, delimiter="\t"):
+                try:
+                    seq = Sequence.objects.get(identifier=line[0])
+                    seq.entrez_id = int(line[1])
                     seq.save()
                 except:
                     pass
