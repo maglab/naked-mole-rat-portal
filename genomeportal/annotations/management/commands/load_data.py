@@ -215,13 +215,13 @@ class Command(BaseCommand):
                 except:
                     pass
 
-    def load_genage(self, geange_file):
+    def load_genage(self, genage_file):
         """
         Indicate if the gene is present in GenAge
         """
         with open(genage_file) as gf:
             for line in csv.reader(gf):
-                genes = Sequence.objects.filter(ncbi_symbol=line[0])
+                genes = Gene.objects.filter(symbol=line[0])
                 for g in genes:
                     g.in_genage = True
                     g.save()
