@@ -134,7 +134,7 @@ block content
                         else
                             | bp
                 div.col-md-6.text-right
-                    if details.type.name == 'Protein'
+                    if details.type.name == 'Protein' and details.has_alignments
                         a(href="{% url 'genomeportal.annotations.views.alignments' details.identifier %}") View alignments
                         | &nbsp;&nbsp;
                     a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
@@ -172,7 +172,7 @@ block content
                                 | aa
                             else
                                 | bp
-                        if seq.type.name == 'Protein'
+                        if seq.type.name == 'Protein' and seq.has_alignments
                             a(href="{% url 'genomeportal.annotations.views.alignments' seq.identifier %}").pull-right View alignments
                         <pre class="sequence">>{{seq.identifier}}
                         {{seq.sequence|default:"No sequence found"}}

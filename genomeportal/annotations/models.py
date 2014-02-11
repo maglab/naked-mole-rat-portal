@@ -71,6 +71,9 @@ class Sequence(models.Model):
     def position_from_identifier(self):
         return self.identifier.split('_')[-1]
 
+    def has_alignments(self):
+        return True if self.part_of.genes.filter(gene__organism__name='Cavia porcellus').count() > 0 else False
+
     def __unicode__(self):
         return self.identifier
 
