@@ -137,6 +137,8 @@ INSTALLED_APPS = (
     'genomeportal.annotations',
 )
 
+ALIGNMENTS_DIR = os.path.join(PROJECT_ROOT, '../', 'alignments')
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

@@ -1,6 +1,11 @@
+import sys
+import os
+
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404, HttpResponse
+from django.conf import settings
 
 from django_tables2 import RequestConfig
 
@@ -52,6 +57,18 @@ def details(request, identifier):
         'details': details,
         'sequence': sequence,
     })
+
+def alignments(request, identifier):
+    details = get_object_or_404(Sequence, identifier=identifier)
+    if details.type.name != 'Protein':
+        raise Http404
+    try:
+        gpg = details.part_of.genes.filter(gene__organism__name='Cavia porcellus')[0]
+        filename = '{}.aln'.format(gpg.identifier)
+        with open(os.path.join(settings.ALIGNMENTS_DIR, filename)) as alignment:
+            return HttpResponse(alignment.read(), content_type='text/plain')
+    except:
+        raise Http404
 
 def raw_sequence(request, identifier):
     details = get_object_or_404(Sequence, identifier=identifier)
