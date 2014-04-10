@@ -61,7 +61,7 @@ def details(request, identifier):
 def alignments(request, identifier):
     if identifier != '':
         try:
-            filename = '{}.aln'.format(gpg.identifier)
+            filename = '{}.aln'.format(identifier)
             with open(os.path.join(settings.ALIGNMENTS_DIR, filename)) as alignment:
                 return HttpResponse(alignment.read(), content_type='text/plain')
         except:
