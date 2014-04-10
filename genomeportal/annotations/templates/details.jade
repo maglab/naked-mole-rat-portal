@@ -175,7 +175,8 @@ block content
                         //-if seq.type.name == 'Protein' and seq.has_alignments
                         if seq.has_alignments
                             for gn in details.genes.all
-                                a(href="{% url 'genomeportal.annotations.views.alignments' gn.identifier %}").pull-right View alignments
+                                if gn.genes.organism.name = 'Cavia porcellus'
+                                    a(href="{% url 'genomeportal.annotations.views.alignments' gn.identifier %}").pull-right View alignments
                         <pre class="sequence">>{{seq.identifier}}
                         {{seq.sequence|default:"No sequence found"}}
                         </pre>
