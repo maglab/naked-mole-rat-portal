@@ -84,7 +84,7 @@ class Command(BaseCommand):
                 description = seq.description.split('|')[-1].strip()
                 if description.startswith('PREDICTED:'):
                     ncbi_predicted = True
-                if map_protein_to_gene:
+                if map_protein_to_gene and seq_id in protein_to_gene:
                     identifier = protein_to_gene[seq_id][1]
                     ncbi_symbol = protein_to_gene[seq_id][2]
                     ncbi_name = protein_to_gene[seq_id][3].strip()
