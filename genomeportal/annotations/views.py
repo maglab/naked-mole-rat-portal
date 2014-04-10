@@ -59,6 +59,16 @@ def details(request, identifier):
     })
 
 def alignments(request, identifier):
+    if identifier != '':
+        try:
+            filename = '{}.aln'.format(gpg.identifier)
+            with open(os.path.join(settings.ALIGNMENTS_DIR, filename)) as alignment:
+                return HttpResponse(alignment.read(), content_type='text/plain')
+        except:
+            raise Http404
+    else:
+        raise Http404
+    '''
     details = get_object_or_404(Sequence, identifier=identifier)
     if details.type.name != 'Protein':
         raise Http404
@@ -69,6 +79,7 @@ def alignments(request, identifier):
             return HttpResponse(alignment.read(), content_type='text/plain')
     except:
         raise Http404
+    '''
 
 def raw_sequence(request, identifier):
     details = get_object_or_404(Sequence, identifier=identifier)
