@@ -1,4 +1,7 @@
+import os
+
 from django.db import models
+from django.conf import settings
 
 class Organism(models.Model):
     class Meta:
@@ -72,7 +75,12 @@ class Sequence(models.Model):
         return self.identifier.split('_')[-1]
 
     def has_alignments(self):
-        return True if self.part_of.genes.filter(gene__organism__name='Cavia porcellus').count() > 0 else False
+        if self.part_of.genes.filter(gene__organism__name='Cavia porcellus').count() > 0:
+            ident = self.part_of.genes.filter(gene__organism__name='Cavia porcellus')[0].identifier
+            filename = '{}.aln'.format(ident)
+            return os.path.isfile(os.path.join(settings.ALIGNMENTS_DIR, filename))
+        return False 
+        #return True if self.part_of.genes.filter(gene__organism__name='Cavia porcellus').count() > 0 else False
 
     def __unicode__(self):
         return self.identifier

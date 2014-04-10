@@ -174,8 +174,8 @@ block content
                                 | bp
                         //-if seq.type.name == 'Protein' and seq.has_alignments
                         for gn in details.genes.all
-                            if gn.gene.organism.name == 'Cavia porcellus' and seq.type.name == 'Protein' and gn.gene.ensmebl != ''
-                                a(href="{% url 'genomeportal.annotations.views.alignments' gn.gene.ensembl %}").pull-right View alignments
+                            if gn.gene.organism.name == 'Cavia porcellus' and seq.type.name == 'Protein' and gn.gene.ensembl != '' and seq.has_alignments
+                                a(href="{% url 'genomeportal.annotations.views.alignments' gn.identifier %}").pull-right View alignments
                         <pre class="sequence">>{{seq.identifier}}
                         {{seq.sequence|default:"No sequence found"}}
                         </pre>
