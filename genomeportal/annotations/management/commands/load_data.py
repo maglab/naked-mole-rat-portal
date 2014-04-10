@@ -1,4 +1,5 @@
 import csv
+from optparse import make_option
 from Bio import SeqIO
 
 from django.core.management.base import BaseCommand
@@ -6,6 +7,13 @@ from django.core.management.base import BaseCommand
 from genomeportal.annotations.models import *
 
 class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option('--database',
+            action='store',
+            dest='database',
+            default='default',
+            help='Choose an alterntaive database'),
+        )
     args = '<type> <files...>'
     # 1: scaffolds
     #args = '<match_file> <cds_file> <prot_file> <details_file>'
@@ -15,6 +23,7 @@ class Command(BaseCommand):
         """
         With a given type of data process and load into database
         """
+        self.options = options
         if args[0] == 'scaffolds':
             self.load_scaffolds(args[1])
         elif args[0] == 'cdna':
@@ -57,13 +66,13 @@ class Command(BaseCommand):
                 seq_id = seq.id.strip('|').split('|')[-1]
                 if seq_id in mapping:
                     try:
-                        part_of = Sequence.objects.get(identifier=mapping[seq_id])
+                        part_of = Sequence.objects.using(self.options['database']).get(identifier=mapping[seq_id])
                     except:
                         part_of = None
                         
                 elif is_complement:
                     try:
-                        part_of = Sequence.objects.get(identifier='{}'.format(seq_id))
+                        part_of = Sequence.objectsi.using(self.options['database']).get(identifier='{}'.format(seq_id))
                     except:
                         part_of = None
                 else:
@@ -90,27 +99,27 @@ class Command(BaseCommand):
                     
                 #print identifier, seq_string, ncbi_name, ncbi_symbol, ncbi_predicted
                 s = Sequence(identifier=identifier, sequence=seq_string, type=sequence_type, part_of=part_of, ncbi_name=ncbi_name, ncbi_symbol=ncbi_symbol, ncbi_predicted=ncbi_predicted)
-                s.save()
+                s.save(using=self.options['database'])
 
     def load_scaffolds(self, scaffold_file):
         """
         Load scaffold sequences in. These are base sequences and have no mapping
         """
-        sequence_type,created = SequenceType.objects.get_or_create(name='Scaffold')
+        sequence_type,created = SequenceType.objects.using(self.options['database']).get_or_create(name='Scaffold')
         self._parse_and_load_fasta(scaffold_file, sequence_type, no_sequence=True)
 
     def load_cds(self, cds_file, mapping_file, map_protein_to_gene):
         """
         Load cDNA sequences. These map to scaffolds.
         """
-        sequence_type,created = SequenceType.objects.get_or_create(name='Coding sequence')
+        sequence_type,created = SequenceType.objects.using(self.options['database']).get_or_create(name='Coding sequence')
         self._parse_and_load_fasta(cds_file, sequence_type, mapping_file=mapping_file, map_protein_to_gene=map_protein_to_gene)
 
     def load_proteins(self, protein_file, mapping_file):
         """
         Load protein sequences. These map to cDNA sequences.
         """
-        sequence_type,created = SequenceType.objects.get_or_create(name='Protein')
+        sequence_type,created = SequenceType.objects.using(self.options['database']).get_or_create(name='Protein')
         self._parse_and_load_fasta(protein_file, sequence_type, is_complement=True, mapping_file=mapping_file)
 
     def load_genes(self, match_file, details_file, species_name, species_common_name, taxonomy_id, identifier_order):
@@ -120,8 +129,8 @@ class Command(BaseCommand):
         from ensembl to create the gene objects. Taxonomy ID is from the NCBI.
         """
         with open(details_file) as df, open(match_file) as mf:
-            sequences = Sequence.objects.filter(type__name='Coding sequence')
-            o,c = Organism.objects.get_or_create(taxonomy_id=taxonomy_id, name=species_name, common_name=species_common_name)
+            sequences = Sequence.objects.using(self.options['database']).filter(type__name='Coding sequence')
+            o,c = Organism.objects.using(self.options['database']).get_or_create(taxonomy_id=taxonomy_id, name=species_name, common_name=species_common_name)
 
             # Turn the details file into a dict with protein ID as key. 
             # This may bork some entries but they'd have to be manually
@@ -153,12 +162,12 @@ class Command(BaseCommand):
                             dta = details[m[external]]
                             name = dta['Description'].split('[')
                             entrez_id = None if dta['EntrezGene ID'] == '' else dta['EntrezGene ID']
-                            g, new = Gene.objects.get_or_create(name=name[0], symbol=dta.get('Associated Gene Name'), entrez_id=entrez_id, ensembl=dta.get('Ensembl Gene ID'), unigene=dta.get('Unigene ID'), uniprot=dta.get('UniProt/SwissProt ID'), organism=o)
+                            g, new = Gene.objects.using(self.options['database']).get_or_create(name=name[0], symbol=dta.get('Associated Gene Name'), entrez_id=entrez_id, ensembl=dta.get('Ensembl Gene ID'), unigene=dta.get('Unigene ID'), uniprot=dta.get('UniProt/SwissProt ID'), organism=o)
                             gm = GeneMatch(identifier=m[external], protein_percentage_match=m['PROT_PERCENTID'], cdna_percentage_match=m['CDNA_PERCENTID'], ka=m['Ka'], ks=m['Ks'], ka_ks_ratio=m['Ka/Ks'], gene=g)
-                            gm.save()
+                            gm.save(using=self.options['database'])
 
                             s.has_genes = True
-                            s.save()
+                            s.save(using=self.options['database'])
                             s.genes.add(gm)
 
     def load_mirnas(self, mirna_file):
@@ -166,25 +175,25 @@ class Command(BaseCommand):
         Load miRNA's. These map to scaffolds
         """
         with open(mirna_file) as mirnas:
-            sequence_type,created = SequenceType.objects.get_or_create(name='miRNA')
+            sequence_type,created = SequenceType.objects.using(self.options['database']).get_or_create(name='miRNA')
             for r in csv.DictReader(mirnas):
                 part_of_identifier = r['provisional id'].rsplit('_', 1)
-                part_of = Sequence.objects.get(identifier=part_of_identifier[0])
+                part_of = Sequence.objects.using(self.options['database']).get(identifier=part_of_identifier[0])
 
                 s = Sequence(identifier=r['provisional id'], sequence=r['consensus mature sequence'], part_of=part_of, type=sequence_type)
-                s.save()
+                s.save(using=self.options['database'])
 
                 if r['example miRBase miRNA with the same seed'] != '-':
-                    mi,c = miRNA.objects.get_or_create(identifier=r['example miRBase miRNA with the same seed'])
+                    mi,c = miRNA.objects.using(self.options['database']).get_or_create(identifier=r['example miRBase miRNA with the same seed'])
                     mi.sequences.add(s)
 
     def load_mrna_identifiers(self, mrna_mapping_file, suffix='cDNA'):
         with open(mrna_mapping_file) as mrna_file:
             for line in csv.reader(mrna_file, delimiter="\t"):
                 try:
-                    seq = Sequence.objects.get(identifier='{}.{}'.format(line[0],suffix))
+                    seq = Sequence.objects.using(self.options['database']).get(identifier='{}.{}'.format(line[0],suffix))
                     seq.part_of_mrna = line[1]
-                    seq.save()
+                    seq.save(using=self.options['database'])
                 except:
                     pass
 
@@ -192,15 +201,15 @@ class Command(BaseCommand):
         """
         Load non-coding sequences. These map to scaffolds
         """
-        sequence_type,created = SequenceType.objects.get_or_create(name='Non-coding sequence')
+        sequence_type,created = SequenceType.objects.using(self.options['database']).get_or_create(name='Non-coding sequence')
         with open(noncoding_file) as nf:
             for line in csv.reader(nf, delimiter="\t"):
-                part_of = Sequence.objects.get(identifier=line[3])
+                part_of = Sequence.objects.using(self.options['database']).get(identifier=line[3])
                 ncbi_predicted = False
                 if line[2].startswith('PREDICTED:'):
                     ncbi_predicted = True
                 s = Sequence(identifier=line[0], sequence=line[4], type=sequence_type, part_of=part_of, ncbi_name=line[2], ncbi_symbol=line[1], ncbi_predicted=ncbi_predicted)
-                s.save()
+                s.save(using=self.options['database'])
 
     def load_entrez(self, entrez_file):
         """
@@ -209,9 +218,9 @@ class Command(BaseCommand):
         with open(entrez_file) as ef:
             for line in csv.reader(ef, delimiter="\t"):
                 try:
-                    seq = Sequence.objects.get(identifier=line[0])
+                    seq = Sequence.objects.using(self.options['database']).get(identifier=line[0])
                     seq.entrez_id = int(line[1])
-                    seq.save()
+                    seq.save(using=self.options['database'])
                 except:
                     pass
 
@@ -221,7 +230,7 @@ class Command(BaseCommand):
         """
         with open(genage_file) as gf:
             for line in csv.reader(gf):
-                genes = Gene.objects.filter(symbol=line[0])
+                genes = Gene.objects.using(self.options['database']).filter(symbol=line[0])
                 for g in genes:
                     g.in_genage = True
-                    g.save()
+                    g.save(using=self.options['database'])
