@@ -29,7 +29,11 @@ block content
                                 th Gene Symbol
                                 td {{details.ncbi_symbol}}
                         tr
-                            th Gene Name
+                            th 
+                                if details.type.name == 'Protein'
+                                    | Protein Name
+                                else
+                                    | Gene Name
                             td {{details.ncbi_name}}
                         if details.entrez_id
                             tr
