@@ -50,7 +50,7 @@ class GeneMatch(models.Model):
         return u'{0} ({1})'.format(self.identifier, self.gene.symbol)
 
 class SequenceType(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, db_index=True)
 
     def __unicode__(self):
         return self.name
@@ -59,9 +59,9 @@ class Sequence(models.Model):
     identifier = models.CharField(max_length=50, db_index=True)
     sequence = models.TextField(blank=True, null=True)
 
-    ncbi_symbol = models.CharField(max_length=100, null=True)
-    ncbi_name = models.CharField(max_length=255, null=True)
-    entrez_id = models.IntegerField(null=True)
+    ncbi_symbol = models.CharField(max_length=100, null=True, db_index=True)
+    ncbi_name = models.CharField(max_length=255, null=True, db_index=True)
+    entrez_id = models.IntegerField(null=True, db_index=True)
     ncbi_predicted = models.BooleanField(default=False)
 
     type = models.ForeignKey(SequenceType)
