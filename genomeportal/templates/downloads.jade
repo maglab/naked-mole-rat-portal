@@ -26,8 +26,13 @@ block content
                         p FASTA files with scaffolds, genes and proteins are provided.
 
                         a(href="/static/downloads/naked_mole_rat_fasta_files.zip") Download file
+                        
+                div.panel.panel-default
+                    div.panel-heading: strong Raw reads
+                    div.panel-body
+                        a#RAW
+                        p All the naked mole rat genome data is available through the NCBI using accession <a href="http://www.ncbi.nlm.nih.gov/bioproject/197330">PRJNA197330</a>.
 
-            div.col-md-6
                 div.panel.panel-default
                     div.panel-heading: strong BLAST database
                     div.panel-body
@@ -38,6 +43,7 @@ block content
 
                         a(href="/static/downloads/naked_mole_rat_blast_database.zip") Download file
 
+            div.col-md-6
                 div.panel.panel-default
                     div.panel-heading: strong TGAC genome
                     div.panel-body
@@ -45,10 +51,19 @@ block content
                         p A FASTA file is provided with all contigs with a length greater than 500 bases from the genome sequence performed at TGAC.
 
                         a(href="/static/downloads/naked_mole_rat_contigs.zip") Download file                        
-                        
+
+                h2 Gene expression downloads
+
+                p Suplementary material from the <a href="/gene_expression">gene expression study</a> carried out on the Naked Mole-rat.
+                
                 div.panel.panel-default
-                    div.panel-heading: strong Raw reads
+                    div.panel-heading: strong Supplementary material
+                    p.panel-body <a href="http://naked-mole-rat.org/static/downloads/RNA_seq_supplements.zip">RNA_seq_supplements.zip</a>, full results for all genes and functional enrichment analysis.
+
+                div.panel.panel-default
+                    div.panel-heading: strong Raw data
                     div.panel-body
-                        a#RAW
-                        p All the naked mole rat genome data is available through the NCBI using accession <a href="http://www.ncbi.nlm.nih.gov/bioproject/197330">PRJNA197330</a>.
+                        p Raw Illumina/Solexa reads are available in the Gene Expression Omnibus (GEO) repository under accession <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE30764">GSE30764</a>.
+
+                        p The raw naked mole-rat 454 raw data are available at the <a href="http://genome.imb-jena.de/mrat_blast/nmr_pool1.zip">Leibniz Institute for Age Research</a>.
 
