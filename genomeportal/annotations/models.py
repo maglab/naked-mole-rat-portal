@@ -29,7 +29,7 @@ class Gene(models.Model):
     ensembl = models.CharField(max_length=20, blank=True, null=True, db_index=True)
     uniprot = models.CharField(max_length=20, blank=True, null=True)
     unigene = models.CharField(max_length=20, blank=True, null=True)
-    in_genage = models.BooleanField(default=False)
+    in_genage = models.BooleanField(default=False, db_index=True)
 
     organism = models.ForeignKey(Organism)
 
@@ -64,12 +64,15 @@ class Sequence(models.Model):
     entrez_id = models.IntegerField(null=True, db_index=True)
     ncbi_predicted = models.BooleanField(default=False)
 
+    start_coord = models.IntegerField(null=True)
+    end_coord = models.IntegerField(null=True)
+
     type = models.ForeignKey(SequenceType)
     part_of = models.ForeignKey('self', related_name='related_sequences', blank=True, null=True)
 
     genes = models.ManyToManyField(GeneMatch, blank=True, null=True)
     has_genes = models.BooleanField(default=False, db_index=True)
-    in_genage = models.BooleanField(default=False)
+    in_genage = models.BooleanField(default=False, db_index=True)
 
     def position_from_identifier(self):
         return self.identifier.split('_')[-1]

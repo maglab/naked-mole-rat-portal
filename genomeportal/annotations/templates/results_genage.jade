@@ -1,0 +1,26 @@
+extends base
+{% load django_tables2 %}
+
+block title
+    title The Naked Mole-Rat Genome Resource
+
+block content
+    header.page-header
+        div.container
+            h1 Genes also present in the GenAge database
+    div.page.container
+        div.row
+            div.col-md-12
+                {% render_table results 'custom_table.html' %}
+                ul.pagination.pagination-lg
+                    li: a(href="{% querystring results.prefixed_page_field=1 %}") &laquo;
+                    if results.page.previous_page_number >= 1
+                        li: a(href="{% querystring results.prefixed_page_field=results.page.previous_page_number %}") &lsaquo;
+                    for p in pages
+                        if p == results.number
+                            li.active: a(href="{% querystring results.prefixed_page_field=p %}")= p
+                        else
+                            li: a(href="{% querystring results.prefixed_page_field=p %}")= p
+                    if results.page.next_page_number <= results.paginator.num_pages
+                        li: a(href="{% querystring results.prefixed_page_field=results.page.next_page_number %}") &rsaquo;
+                    li: a(href="{% querystring results.prefixed_page_field=results.paginator.num_pages %}") &raquo;

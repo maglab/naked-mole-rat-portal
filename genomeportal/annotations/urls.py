@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('genomeportal.annotations.views',
     url(r'^/$', 'results'),
+    url(r'^/results/genage/$', 'genage', name='in_genage'),
     url(r'^/results/$', 'results', name='annotation_results'),
     url(r'^/details/alignments/(?P<identifier>.*)/$', 'alignments', name='alignments'),
     url(r'^/details/(?P<identifier>.*)/raw/$', 'raw_sequence', name='raw_sequence'),

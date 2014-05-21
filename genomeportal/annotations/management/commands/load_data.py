@@ -232,8 +232,12 @@ class Command(BaseCommand):
         Indicate if the gene is present in GenAge
         """
         with open(genage_file) as gf:
-            for line in csv.reader(gf):
-                genes = Gene.objects.using(self.options['database']).filter(symbol=line[0])
-                for g in genes:
-                    g.in_genage = True
-                    g.save(using=self.options['database'])
+            sequences = Sequence.objects.using(self.options['database']).filter(has_genes=True)
+            valid_genes = [line[0] for line in csv.reader(gf)]
+            for s in sequences:
+                for g in s.genes.filter(gene__entrez_id__in=valid_genes):
+                    gene = g.gene
+                    gene.in_genage = True
+                    gene.save(using=self.options['database'])
+                    s.in_genage = True
+                    s.save(using=self.options['database'])

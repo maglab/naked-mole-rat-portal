@@ -53,6 +53,8 @@ block content
 
                         p You can search using either a gene name, Ensembl identifier (from {{ organisms|join:", " }}) or Naked Mole-Rat sequence ID
 
+                        p We also provide a <a href="{% url 'genomeportal.annotations.views.genage' %}">list of genes also in the GenAge database</a> to allow easy discovery of known ageing genes.
+
                         h3 BLAST search
 
                         p For searching sequence you can use our BLAST server to align a given sequence to scaffolds and genes. 

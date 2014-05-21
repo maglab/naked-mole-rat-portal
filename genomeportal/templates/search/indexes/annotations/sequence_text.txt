@@ -1,0 +1,12 @@
+{{ object.identifier }}
+{{ object.type.name }}
+{{ object.ncbi_symbol }}
+{{ object.ncbi_name }}
+{{ object.entrez_id }}
+{% for g in object.genes.all %}
+    {{ g.identifier }}
+    {{ g.gene.ensembl }}
+    {{ g.gene.symbol }}
+    {{ g.gene.name }}
+    {{ g.gene.alias }}
+{% endfor %}
