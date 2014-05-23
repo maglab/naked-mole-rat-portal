@@ -6,6 +6,8 @@
 {% for g in object.genes.all %}
     {{ g.identifier }}
     {{ g.gene.ensembl }}
+    {{ g.gene.uniprot }}
+    {{ g.gene.unigene }}
     {{ g.gene.symbol }}
     {{ g.gene.name }}
     {{ g.gene.alias }}

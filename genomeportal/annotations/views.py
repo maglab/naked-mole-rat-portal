@@ -10,6 +10,7 @@ from django.conf import settings
 from django_tables2 import RequestConfig
 
 from haystack.query import SearchQuerySet
+from haystack.inputs import Raw
 
 from genomeportal.annotations.models import Sequence, SequenceType
 from genomeportal.annotations.tables import SequenceTable, GenageSequenceTable
@@ -23,7 +24,7 @@ def results(request):
 
     if term is not None and term != '':
         term = term.strip()
-        results_list = SearchQuerySet().filter(content=term)
+        results_list = SearchQuerySet().filter(content=Raw(term))
     else:
         results_list = SearchQuerySet().all()
 

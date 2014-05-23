@@ -114,6 +114,11 @@ block content
                                             tr
                                                 th Ka/Ks Ratio
                                                 td {{g.ka_ks_ratio}} (Ka = {{g.ka}}, Ks = {{g.ks}})
+        if details.type.name == 'Coding sequence' or details.type.name == 'Scaffold'
+            div.row
+                div.col-md-12
+                    h2 Genome Location
+                    iframe(src="/jbrowse/index.html?tracklist=0&amp;tracks=region,gene,mRNA&amp;loc={{details.part_of.identifier}}:{{details.get_coords.0}}..{{details.get_coords.1}}").embeded-browser
 
         if details.sequence != '' and details.sequence != None
             div.row
@@ -123,10 +128,11 @@ block content
             {% if details.type.name == 'Coding sequence' %}
             div.row
                 div.col-md-12
-                    form(action="/blast/", method="post").alert.alert-nmr 
-                        input(type="hidden", name="seq", value="{{details.sequence}}")
-                        input(type="hidden", name="db", value="Naked Mole-Rat scaffold sequences")
-                        | You can <button type="submit" class="btn btn-default btn-sm">BLAST this sequence</button> against the scaffolds to get genomic coordinates
+                    //-
+                        form(action="/blast/", method="post").alert.alert-nmr 
+                            input(type="hidden", name="seq", value="{{details.sequence}}")
+                            input(type="hidden", name="db", value="Naked Mole-Rat scaffold sequences")
+                            | You can <button type="submit" class="btn btn-default btn-sm">BLAST this sequence</button> against the scaffolds to get genomic coordinates
             {% endif %}
             div.row
                 div.col-md-6
@@ -137,6 +143,15 @@ block content
                             | aa
                         else
                             | bp
+                    &nbsp;&nbsp;
+                    if details.get_coords.0 != None
+                        b Location: 
+                        span
+                            |{{details.get_coords.0}}..{{details.get_coords.1}}
+                    &nbsp;
+                    if details.strand != None
+                        b Strand: 
+                        span= details.strand
                 div.col-md-6.text-right
                     if details.has_alignments and details.type.name == 'Protein'
                         for gn in details.part_of.genes.all

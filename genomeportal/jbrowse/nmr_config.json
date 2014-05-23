@@ -1,0 +1,39 @@
+{
+    "description": "Naked Mole-rat Genome (Female, v1.0)",
+    "db_adaptor": "Bio::DB::SeqFeature::Store",
+    "db_args": {
+        "-adaptor": "memory",
+        "-dsn": "source_downloads/ref_HetGla_female_1.0_scaffolds.gff3"
+    },
+
+    "TRACK DEFAULTS": {
+        "class": "feature",
+        "autocomplete": "all"
+    },
+
+    "tracks": [
+        {
+            "track": "gene",
+            "feature": ["gene"],
+            "class": "feature2",
+            "key": "Gene"
+        },
+        {
+            "track": "mRNA",
+            "feature": ["mRNA"],
+            "class": "transcript",
+            "subfeatures": true,
+            "subfeature_classes": {
+                "CDS": "transcript-CDS"
+            },
+            "arrowheadClass": "transcript-arrowhead",
+            "key": "mRNA"
+        },
+        {
+            "track": "region",
+            "feature": ["region"],
+            "class": "feature5",
+            "key": "Region"
+        }
+    ]
+}

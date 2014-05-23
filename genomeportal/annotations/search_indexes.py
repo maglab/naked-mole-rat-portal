@@ -29,13 +29,13 @@ class SequenceIndex(indexes.Indexable, indexes.SearchIndex):
         return output 
 
     def prepare_ka_ks_ratio(self, obj):
-        return [g.gene.ka_ks_ratio for g in obj.genes.all()]
+        return [g.ka_ks_ratio for g in obj.genes.all()]
 
     def prepare_cds_percentage(self, obj):
-        return [g.gene.cdna_precentage_match for g in obj.genes.all()]
+        return [g.cdna_percentage_match for g in obj.genes.all()]
 
     def prepare_protein_percentage(self, obj):
-        return [g.gene.protein_precentage_match for g in obj.genes.all()]
+        return [g.protein_percentage_match for g in obj.genes.all()]
 
     def prepare(self, obj):
         data = super(SequenceIndex, self).prepare(obj)

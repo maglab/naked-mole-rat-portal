@@ -66,6 +66,7 @@ class Sequence(models.Model):
 
     start_coord = models.IntegerField(null=True)
     end_coord = models.IntegerField(null=True)
+    strand = models.CharField(max_length=1, null=True)
 
     type = models.ForeignKey(SequenceType)
     part_of = models.ForeignKey('self', related_name='related_sequences', blank=True, null=True)
@@ -73,6 +74,12 @@ class Sequence(models.Model):
     genes = models.ManyToManyField(GeneMatch, blank=True, null=True)
     has_genes = models.BooleanField(default=False, db_index=True)
     in_genage = models.BooleanField(default=False, db_index=True)
+
+    @property
+    def get_coords(self):
+        if self.strand == '-':
+            return [self.end_coord, self.start_coord]
+        return [self.start_coord, self.end_coord]
 
     def position_from_identifier(self):
         return self.identifier.split('_')[-1]
