@@ -3,6 +3,8 @@ The Naked Mole-rat Genome Portal
 
 A genome portal designed for the Naked Mole Rat Genome. It supports the searching and display of a genome, including linked genes. It also provides the jBrowse genome viewer for a more detailed look at the structure of the gene in the details pages. 
 
+**Please contact us before using this portal!**. Until will have published the paper we would ask that you caontact us so we can provide a citation for you to use when either publishing or using this portal with other genomes. 
+
 Please be aware as this portal was not deigned for portability or for generalised use there may be issues when running it with other genomes and documentation is lacking in most areas.
 
 ## Requirements
