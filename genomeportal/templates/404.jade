@@ -1,0 +1,17 @@
+extends base
+
+block title
+    title 404: Page Not Found | The Naked Mole-Rat Genome Resource
+
+block content
+    header.page-header
+        div.container
+            h1 404: Page Not Found
+    div.container
+        div.row
+            div.col-md-12
+                h2 The page <i>{{request_path}}</i> does not exist. 
+                
+                p If you have typed this as a URL, please check your spelling. If however this was a link from within the site please <a href="http://pcwww.liv.ac.uk/~aging/contact.html">contact us</a> to inform us of this issue.
+
+                p Why not try and see if the page you require is linked <a href="/">from the front page</a>. 

@@ -4,6 +4,8 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.utils.functional import curry
+from django.views.defaults import *
 
 from django.contrib import admin
 admin.autodiscover()
@@ -16,3 +18,6 @@ urlpatterns = patterns('',
     url(r'^annotations', include('genomeportal.annotations.urls')),
     url(r'^admin/', include(admin.site.urls)),
     ) + static('/jbrowse/', document_root=os.path.join(settings.PROJECT_ROOT, 'jbrowse'))
+
+handler404 = curry(page_not_found, template_name='404.jade')
+handler500 = curry(server_error, template_name='500.jade')
