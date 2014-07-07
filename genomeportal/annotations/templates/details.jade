@@ -125,45 +125,36 @@ block content
                 div.col-md-12
                     h2 Sequence 
                         small= details.type
-            {% if details.type.name == 'Coding sequence' %}
-            div.row
-                div.col-md-12
-                    //-
-                        form(action="/blast/", method="post").alert.alert-nmr 
-                            input(type="hidden", name="seq", value="{{details.sequence}}")
-                            input(type="hidden", name="db", value="Naked Mole-Rat scaffold sequences")
-                            | You can <button type="submit" class="btn btn-default btn-sm">BLAST this sequence</button> against the scaffolds to get genomic coordinates
-            {% endif %}
-            div.row
-                div.col-md-6
-                    b Length: 
-                    span
-                        | {{details.sequence|length}}
-                        if details.type.name == 'Protein'
-                            | aa
-                        else
-                            | bp
-                    &nbsp;&nbsp;
-                    if details.get_coords.0 != None
-                        b Location: 
+                div.row
+                    div.col-md-6
+                        b Length: 
                         span
-                            |{{details.get_coords.0}}..{{details.get_coords.1}}
-                    &nbsp;
-                    if details.strand != None
-                        b Strand: 
-                        span= details.strand
-                div.col-md-6.text-right
-                    if details.has_alignments and details.type.name == 'Protein'
-                        for gn in details.part_of.genes.all
-                            if gn.gene.organism.name = 'Cavia porcellus'
-                                a(href="{% url 'genomeportal.annotations.views.alignments' gn.identifier %}").pull-right View alignments
-                    a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
-                    | &nbsp;&nbsp;
-            div.row
-                div.col-md-12
-                    <pre class="sequence">>{{details.identifier}}
-                    {{sequence|default:"No sequence found"}}
-                    </pre>
+                            | {{details.sequence|length}}
+                            if details.type.name == 'Protein'
+                                | aa
+                            else
+                                | bp
+                        &nbsp;&nbsp;
+                        if details.get_coords.0 != None
+                            b Location: 
+                            span
+                                |{{details.get_coords.0}}..{{details.get_coords.1}}
+                        &nbsp;
+                        if details.strand != None
+                            b Strand: 
+                            span= details.strand
+                    div.col-md-6.text-right
+                        if details.has_alignments and details.type.name == 'Protein'
+                            for gn in details.part_of.genes.all
+                                if gn.gene.organism.name = 'Cavia porcellus'
+                                    a(href="{% url 'genomeportal.annotations.views.alignments' gn.identifier %}").pull-right View alignments
+                        a(href="{% url 'raw_sequence' details.identifier %}") Raw sequence
+                        | &nbsp;&nbsp;
+                div.row
+                    div.col-md-12
+                        <pre class="sequence">>{{details.identifier}}
+                        {{sequence|default:"No sequence found"}}
+                        </pre>
 
         if details.related_sequences.count > 0
             div.row
