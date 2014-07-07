@@ -25,7 +25,11 @@ block content
                         a#FASTA
                         p FASTA files with scaffolds, genes and proteins are provided.
 
-                        a(href="/static/downloads/naked_mole_rat_fasta_files.zip") Download file
+                        a(href="/static/downloads/naked_mole_rat_contigs.zip") Download genes file
+                        br
+                        a(href="/static/downloads/naked_mole_rat_proteins.zip") Download proteins file
+                        br
+                        a(href="/static/downloads/naked_mole_rat_scaffolds.zip") Download scaffolds file
                         
                 div.panel.panel-default
                     div.panel-heading: strong Raw reads
@@ -48,9 +52,9 @@ block content
                     div.panel-heading: strong TGAC genome
                     div.panel-body
                         a#TGAC
-                        p A FASTA file is provided with all contigs with a length greater than 500 bases from the genome sequence performed at TGAC.
+                        p <a href="http://www.tgac.ac.uk/">The Genome Analysis Centre (TGAC)</a> generated an additional, but lower quality, assembly of the naked mole rat genome.  This was based on two Illumina paired-end sequencing runs (average insert size ~350 bp) resulting in ~23-fold coverage.  ABySS was used to generate a de novo assembly with contig N50 of 2,078 bp.  A FASTA file is provided with all contigs with a length greater than 500 bases.
 
-                        a(href="/static/downloads/naked_mole_rat_contigs.zip") Download file                        
+                        a(href="/static/downloads/tgac_naked_mole_rat_contigs_gt500bp.zip") Download File
 
                 h2 Gene expression downloads
 

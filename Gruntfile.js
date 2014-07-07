@@ -4,7 +4,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         less: {
             options: {
-                paths: ['<%= pkg.resources %>bootstrap-3.0.0/less/', '<%= pkg.name %>/resources/less/*']
+                paths: ['/Users/work/Dropbox/Resources/Bootstrap/bootstrap-3.2.0/less/', '<%= pkg.name %>/resources/less/*']
             },
             default: {
                 files: {

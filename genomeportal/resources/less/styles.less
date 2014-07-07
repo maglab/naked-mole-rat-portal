@@ -30,6 +30,20 @@ figcaption {
     font-size: 0.9em;
 }
 
+@media (max-width: @screen-md-min) {
+    .page-header {
+        margin-top: 0.5em;
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+    }
+    h2 {
+        margin-top: 0;
+        font-size: 1.75em;
+    }
+}
+
 .navbar-image-brand {
     padding: 5px 15px 0 15px;
 }
@@ -43,7 +57,11 @@ figcaption {
 
 .nmr-header {
     //background: url(/static/images/nmr_header_shaded.jpg) no-repeat center -320px;
-    background: url(/static/images/nmr_header_shaded_alt.jpg) no-repeat center -550px;
+    background: url(/static/images/nmr_header_shaded_alt.jpg) no-repeat center center; //-550px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     color: white;
     //text-shadow: black 2px 2px, black -2px -2px, black 2px -2px, black -2px 2px;
     text-shadow: 0 1px 0 rgba(0,0,0,0.15); 
@@ -57,6 +75,19 @@ figcaption {
         margin-bottom: 4em;
         font-size: 1.5em;
         color: #FFF2F1;
+    }
+}
+
+@media (max-width: @screen-md-min) {
+    .nmr-header {
+        h1 {
+            margin-top: 0.25em;
+            font-size: 2.5em;
+        }
+        p {
+            margin-bottom: 1em;
+            font-size: 1.25em;
+        }
     }
 }
 
@@ -93,12 +124,19 @@ figcaption {
     border-color: darken(@shade-colour, 10%);
 }
 
+@media (max-width: @screen-md-min) {
+    .panel-nmr h2 {
+        font-size: 1.3em;
+    }
+}
+
 .no-top-border th, .no-top-border td {
     border-top: 0 !important;
 }
 
 .homepage-main-section {
-    padding: 1em 0 0 0;
+    padding-top: 1em;
+    //padding: 1em 0 0 0;
 }
 
 .alt-content-section {
@@ -150,6 +188,13 @@ a.homepage-search-container-link {
 .alert-nmr {
     border-color: @shade-colour;
     background-color: @panel-bg-colour;
+}
+
+.help-button {
+    padding: 0.25em 0.5em;
+    margin-bottom: 1em;
+    display: block;
+    font-size: 0.9em;
 }
 
 tr.highlight {

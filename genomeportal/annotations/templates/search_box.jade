@@ -5,10 +5,12 @@ div.panel.panel-default.panel-nmr
         form(method="get", action="/annotations/results/", role="form").row.homepage-search-container-form
             div.col-md-10.col-md-offset-1
                 div.input-group
-                    input(type="text", name="s", value="{{term|default:""}}").form-control
+                    input(type="text", name="s", value="{{term|default:""}}", placeholder="e.g. P53, ENSMUSG00000059552").form-control
                     span.input-group-btn
                         button(type="submit").btn.btn-default.btn-nmr Search
 
-        p You can search using either a gene name, Ensembl identifier (from Mouse) or Naked Mole-Rat sequence ID
+        a(href="#help-collapse", data-toggle="collapse").btn.btn-default.btn-small.help-button Show search help
+        div.collapse#help-collapse
+            p You can search using either a gene name, Ensembl identifier (from {{ organisms|join:", " }}) or Naked Mole-Rat sequence ID
 
-        p For more detailed queries you can use boolean (<code>AND</code>, <code>OR</code>, <code>NOT</code>), wildcard (<code>*</code>) and range searches (<code>[1 TO 2]</code>). You can also search for specific terms by grouping them in quotes e.g. "growth hormone". Certain fields are also available for more detailed filtering: <i>ka_ks_ratio</i>, <i>cdna_percentage</i> and <i>protein_percentage</i>. These can be used by following the structure of the next example: <code>ka_ks_ratio:[0.75 TO 0.8]</code> or <code>protein_percentage:98</code>. When using filters wildcards are required to get partial matches.
+            p For more detailed queries you can use boolean (<code>AND</code>, <code>OR</code>, <code>NOT</code>), wildcard (<code>*</code>) and range searches (<code>[1 TO 2]</code>). You can also search for specific terms by grouping them in quotes e.g. "growth hormone". Certain fields are also available for more detailed filtering: <i>ka_ks_ratio</i>, <i>cdna_percentage</i> and <i>protein_percentage</i>. These can be used by following the structure of the next example: <code>ka_ks_ratio:[0.75 TO 0.8]</code> or <code>protein_percentage:98</code>. When using filters wildcards are required to get partial matches.

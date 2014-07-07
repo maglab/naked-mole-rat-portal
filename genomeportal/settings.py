@@ -3,8 +3,9 @@ import os
 from django.conf import global_settings
 
 PROJECT_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'genomeportal') #'/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
+ALIGNMENT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'alignments')
 
-DEBUG = True
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -27,7 +28,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.naked-mole-rat.org']
+ALLOWED_HOSTS = ['localhost', '.naked-mole-rat.org']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -134,6 +135,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'django_tables2',
+    'debug_toolbar',
+    'haystack',
     'genomeportal.annotations',
 )
 
@@ -166,4 +169,12 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'nmr',
+    },
 }

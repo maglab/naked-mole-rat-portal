@@ -12,7 +12,34 @@ block content
         div.row
             div.col-md-12
                 p.lead The naked mole-rat (<i>Heterocephalus glaber</i>) is a fascinating subterranean rodent that offers great promise as a biomedical model of resistance to disease, and diseases of ageing in particular. It is the longest-lived rodent and is exceptionally resistant to neoplasia, making it a unique model for research on ageing and cancer as well as other traits such as metabolic regulation, development, pain and behaviour.
-            div.col-md-6
+
+            div.col-md-6.col-md-push-6
+                div.panel.panel-default.panel-nmr
+                    div.panel-heading
+                        h2 Searching the genome
+                    div.panel-body
+                        form(method="get", action="/annotations/results/", role="form").row.homepage-search-container-form
+                            div.col-md-10.col-md-offset-1
+                                div.input-group
+                                    input(type="text", name="s", placeholder="e.g. P53, ENSMUSG00000059552").form-control
+                                    span.input-group-btn
+                                        button(type="submit").btn.btn-default.btn-nmr Search
+
+                        a(href="#help-collapse", data-toggle="collapse").btn.btn-default.btn-small.help-button Show search help
+                        div.collapse#help-collapse
+                            p You can search using either a gene name, Ensembl identifier (from {{ organisms|join:", " }}) or Naked Mole-Rat sequence ID
+
+                            p For more detailed queries you can use boolean (<code>AND</code>, <code>OR</code>, <code>NOT</code>), wildcard (<code>*</code>) and range searches (<code>[1 TO 2]</code>). You can also search for specific terms by grouping them in quotes e.g. "growth hormone". Certain fields are also available for more detailed filtering: <i>ka_ks_ratio</i>, <i>cdna_percentage</i> and <i>protein_percentage</i>. These can be used by following the structure of the next example: <code>ka_ks_ratio:[0.75 TO 0.8]</code> or <code>protein_percentage:98</code>. When using filters wildcards are required to get partial matches.
+
+                        p We also provide a <a href="{% url 'genomeportal.annotations.views.genage' %}">list of genes also in the GenAge database</a> to allow easy discovery of known ageing genes.
+
+                        h3 BLAST search
+
+                        p For searching sequence you can use our BLAST server to align a given sequence to scaffolds and genes. 
+
+                        a(href="/blast/").homepage-search-container-link Go to BLAST search page &raquo;
+
+            div.col-md-6.col-md-pull-6
                 p This site aims to help researchers study the genome and genes of the naked mole-rat to better understand its extraordinary traits and foster further studies employing this unique organism. We develop genomic resources that facilitate studies on the naked mole-rat at various levels (e.g., cellular, molecular, genetic and biochemical). Specifically, we make available the benchmark naked mole-rat genome (hetGla2) sequenced at the <a href="http://www.broadinstitute.org/">Broad Institute</a> and annotated by the <a href="http://www.ncbi.nlm.nih.gov/">NCBI</a>. Scaffolds, genes (coding sequences) and proteins can be searched, BLASTed and downloaded. We also developed a pipeline for gene expression profiling. 
                 p We welcome opportunities to collaborate with other researchers. Since our aim is to encourage studies in this emerging biomedical model, we are happy to work with the research community and the public to increase awareness and information of the naked mole-rat as a model of healthy ageing and cancer resistance. Please <a href="http://pcwww.liv.ac.uk/~aging/contact.html">contact us</a> if you have any questions or comments. 
 
@@ -29,36 +56,14 @@ block content
                                 td= s.name
                                 td= s.sequence_set.count
 
-                div.row
-                    div.col-md-12
-                        h2 Funding and support provided by:
-                        
-                        a(href="http://www.ellisonfoundation.org/"): img(src="/static/images/ellison_foundation.gif")
-                        | &nbsp;&nbsp;
-                        a(href="http://cordis.europa.eu/fp7/home_en.html"): img(src="/static/images/EC_FP7.jpg")
-                        | &nbsp;&nbsp;
-                        a(href="http://ec.europa.eu/research/mariecurieactions/index.htm"): img(src="/static/images/Marie_Curie_logo.jpg")
-                    
-            div.col-md-6
-                div.panel.panel-default.panel-nmr
-                    div.panel-heading
-                        h2 Searching the genome
-                    div.panel-body
-                        form(method="get", action="/annotations/results/", role="form").row.homepage-search-container-form
-                            div.col-md-10.col-md-offset-1
-                                div.input-group
-                                    input(type="text", name="s", placeholder="e.g. P53, ENSMUSG00000059552").form-control
-                                    span.input-group-btn
-                                        button(type="submit").btn.btn-default.btn-nmr Search
 
-                        p You can search using either a gene name, Ensembl identifier (from {{ organisms|join:", " }}) or Naked Mole-Rat sequence ID
-
-                        p For more detailed queries you can use boolean (<code>AND</code>, <code>OR</code>, <code>NOT</code>), wildcard (<code>*</code>) and range searches (<code>[1 TO 2]</code>). You can also search for specific terms by grouping them in quotes e.g. "growth hormone". Certain fields are also available for more detailed filtering: <i>ka_ks_ratio</i>, <i>cdna_percentage</i> and <i>protein_percentage</i>. These can be used by following the structure of the next example: <code>ka_ks_ratio:[0.75 TO 0.8]</code> or <code>protein_percentage:98</code>. When using filters wildcards are required to get partial matches.
-
-                        p We also provide a <a href="{% url 'genomeportal.annotations.views.genage' %}">list of genes also in the GenAge database</a> to allow easy discovery of known ageing genes.
-
-                        h3 BLAST search
-
-                        p For searching sequence you can use our BLAST server to align a given sequence to scaffolds and genes. 
-
-                        a(href="/blast/").homepage-search-container-link Go to BLAST search page &raquo;
+        div.row
+            div.col-md-12
+                h2 Funding and support provided by:
+                
+                a(href="http://www.ellisonfoundation.org/"): img(src="/static/images/ellison_foundation.gif")
+                | &nbsp;&nbsp;
+                a(href="http://cordis.europa.eu/fp7/home_en.html"): img(src="/static/images/EC_FP7.jpg")
+                | &nbsp;&nbsp;
+                a(href="http://ec.europa.eu/research/mariecurieactions/index.htm"): img(src="/static/images/Marie_Curie_logo.jpg")
+                
