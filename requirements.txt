@@ -1,0 +1,17 @@
+Django==1.6
+Jinja2==2.7.1
+MarkupSafe==0.18
+South==0.8.2
+argparse==1.2.1
+biopython==1.62
+django-haystack==2.1.0
+django-tables2==0.14.0
+lxml==3.2.4
+psycopg2==2.5.1
+pyelasticsearch==0.6.1
+pyjade==2.0.3
+requests==2.3.0
+simplejson==3.4.1
+six==1.4.1
+uWSGI==1.9.18.2
+wsgiref==0.1.2
