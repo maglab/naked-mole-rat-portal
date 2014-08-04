@@ -40,7 +40,7 @@ block content
                                 th Entrez Gene ID
                                 td: a(href="http://www.ncbi.nlm.nih.gov/gene/{{details.entrez_id}}") {{details.entrez_id}}
                 if details.in_genage
-                    p This gene is present in the <a href="http://genomics.senescence.info/genes/entry.php?hgnc={{details.ncbi_symbol}}">GenAge database</a> and has been identified as important to ageing in humans.
+                    p This gene is present in the <a href="http://genomics.senescence.info/genes/entry.php?hgnc={{details.ncbi_symbol}}">GenAge database</a> and has been identified as potentially important to ageing in humans.
             div.col-md-6
                 if details.part_of
                     h2 Database interlinks
@@ -184,6 +184,15 @@ block content
                                 | aa
                             else
                                 | bp
+                        &nbsp;&nbsp;
+                        if seq.get_coords.0 != None
+                            b Location: 
+                            span
+                                |{{seq.get_coords.0}}..{{seq.get_coords.1}}
+                        &nbsp;
+                        if seq.strand != None
+                            b Strand: 
+                            span= seq.strand
                         if seq.has_alignments
                             for gn in details.genes.all
                                 if gn.gene.organism.name = 'Cavia porcellus'

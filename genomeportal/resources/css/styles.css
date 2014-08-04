@@ -6306,6 +6306,14 @@ a.homepage-search-container-link {
 .sequence {
   max-height: 50em;
   overflow: scroll;
+  max-width: 100%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+.pre-break {
+  max-width: 100%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 .alert-nmr {
   border-color: #918181;
