@@ -7,10 +7,10 @@ biopython==1.62
 django-haystack==2.1.0
 django-tables2==0.14.0
 lxml==3.2.4
-psycopg2==2.5.1
+psycopg2==2.7.5
 pyelasticsearch==0.6.1
 pyjade==2.0.3
-requests==2.3.0
+requests==2.20.0
 simplejson==3.4.1
 six==1.4.1
 uWSGI==1.9.18.2
