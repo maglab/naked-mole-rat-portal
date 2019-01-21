@@ -133,11 +133,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'south',
     'django_tables2',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'haystack',
-    'genomeportal.annotations',
+    'genomeportal.annotations'
 )
 
 ALIGNMENTS_DIR = os.path.join(PROJECT_ROOT, '../', 'alignments')
@@ -173,7 +172,7 @@ LOGGING = {
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
         'URL': 'http://127.0.0.1:9200/',
         'INDEX_NAME': 'nmr',
     },
