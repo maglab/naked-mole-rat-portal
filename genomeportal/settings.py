@@ -133,9 +133,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'south',
+    #'south',
     'django_tables2',
-    'debug_toolbar',
     'haystack',
     'genomeportal.annotations',
 )
@@ -175,6 +174,6 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'nmr',
+        'INDEX_NAME': 'nakedmolerat',
     },
 }
