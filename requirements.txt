@@ -1,10 +1,10 @@
-Django==1.8
+Django==1.9
 Jinja2==2.7.1
 MarkupSafe==0.18
 argparse==1.2.1
 biopython==1.62
-django-haystack==2.8.1
-django-tables2==0.14.0
+django-haystack==2.5.0
+django-tables2==1.16.0
 lxml==3.2.4
 psycopg2==2.7.5
 pyelasticsearch==1.4.1

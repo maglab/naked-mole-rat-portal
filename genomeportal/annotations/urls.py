@@ -1,15 +1,15 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
-
 from django.contrib import admin
+from . import views
 admin.autodiscover()
-
+#app_name = 'annotations'
 urlpatterns = patterns('genomeportal.annotations.views',
-    url(r'^/$', 'results'),
-    url(r'^/results/genage/$', 'genage', name='in_genage'),
-    url(r'^/results/$', 'results', name='annotation_results'),
-    url(r'^/details/alignments/(?P<identifier>.*)/$', 'alignments', name='alignments'),
-    url(r'^/details/(?P<identifier>.*)/raw/$', 'raw_sequence', name='raw_sequence'),
-    url(r'^/details/(?P<identifier>.*)/$', 'details', name='annotation_details'),
-    url(r'^/about/$', TemplateView.as_view(template_name='about_annotations.jade'), name='about_annotations'),
+    url(r'^$', views.results),
+    url(r'^results/genage/$', views.genage, name='in_genage'),
+    url(r'^results/$', views.results, name='annotation_results'),
+    url(r'^details/alignments/(?P<identifier>.*)/$', views.alignments, name='alignments'),
+    url(r'^details/(?P<identifier>.*)/raw/$', views.raw_sequence, name='raw_sequence'),
+    url(r'^details/(?P<identifier>.*)/$', views.details, name='annotation_details'),
+    url(r'^about/$', TemplateView.as_view(template_name='about_annotations.jade'))
 )

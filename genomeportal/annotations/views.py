@@ -42,7 +42,7 @@ def results(request):
     # This shows page numbers before and after the current page, without negative numbers getting involved
     start = results.page.number-3 if results.page.number-3 > 0 else 0
     end = results.page.number+3 if results.page.number+3 < results.page.end_index()+1 else results.page.end_index()+1
-    pages = results.page.paginator.page_range[start:end]
+    pages = list(results.page.paginator.page_range)[start:end]
 
     # Avoids repetition of stuff in the templates
     gene_pres_options = (('true', 'Show only best hit gene matches'), ('false', 'Show only low hit gene matches'))

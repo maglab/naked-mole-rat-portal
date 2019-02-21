@@ -5,8 +5,6 @@ from django.conf import global_settings
 PROJECT_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'genomeportal') #'/Users/work/Projects/NakedMoleRatPortal/genomeportal/'
 ALIGNMENT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'alignments')
 
-DEBUG = True 
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Thomas Craig', 'thomas.craig@tjc.me.uk'),
@@ -17,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'nmr',                      # Or path to database file if using sqlite3.
+        'NAME': 'nakedmolerat',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'postgres',
         'PASSWORD': 'postgres',
@@ -92,12 +90,13 @@ STATICFILES_FINDERS = (
 SECRET_KEY = '8e6htoc00+ku&ux(qj8+c3+64*9*tu3ie9@&w4t!-%p3qsslq%'
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    ('pyjade.ext.django.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
+# TEMPLATE_LOADERS = (
+#     ('pyjade.ext.django.Loader', (
+#         'django.template.loaders.filesystem.Loader',
+#         'django.template.loaders.app_directories.Loader',
+#     )),
+#
+# )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -109,21 +108,51 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+
+
 ROOT_URLCONF = 'genomeportal.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'genomeportal.wsgi.application'
 
-TEMPLATE_DIRS = (
-    PROJECT_ROOT+'/templates',
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+# TEMPLATE_DIRS = (
+#     PROJECT_ROOT+'/templates',
+#     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+#     # Always use forward slashes, even on Windows.
+#     # Don't forget to use absolute paths, not relative paths.
+# )
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-)
+# TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + [
+#     'django.core.context_processors.request',
+# ]
+
+DEBUG = True
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [PROJECT_ROOT + '/templates'],
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request'
+            ],
+
+            'loaders': [
+                # PyJade part:   ##############################
+                ('pyjade.ext.django.Loader', (
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ))
+            ],
+            'builtins': ['pyjade.ext.django.templatetags'],
+            'debug': DEBUG,
+        },
+    }
+]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -135,7 +164,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     #'south',
     'django_tables2',
-    'haystack',
+    # 'haystack',
     'genomeportal.annotations',
 )
 
