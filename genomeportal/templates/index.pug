@@ -31,7 +31,7 @@ block content
 
                             p For more detailed queries you can use boolean (<code>AND</code>, <code>OR</code>, <code>NOT</code>), wildcard (<code>*</code>) and range searches (<code>[1 TO 2]</code>). You can also search for specific terms by grouping them in quotes e.g. "growth hormone". Certain fields are also available for more detailed filtering: <i>ka_ks_ratio</i>, <i>cdna_percentage</i> and <i>protein_percentage</i>. These can be used by following the structure of the next example: <code>ka_ks_ratio:[0.75 TO 0.8]</code> or <code>protein_percentage:98</code>. When using filters wildcards are required to get partial matches.
 
-                        p We also provide a <a href="{% url 'genomeportal.annotations.views.genage' %}">list of genes also in the GenAge database</a> to allow easy discovery of known ageing genes.
+                        p We also provide a <a href="{% url 'annotations:in_genage' %}">list of genes also in the GenAge database</a> to allow easy discovery of known ageing genes.
 
                         h3 BLAST search
 
