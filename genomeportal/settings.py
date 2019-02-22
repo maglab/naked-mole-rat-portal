@@ -70,6 +70,7 @@ STATIC_ROOT = PROJECT_ROOT+'/static/'
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     PROJECT_ROOT+'/resources',
@@ -134,21 +135,22 @@ TEMPLATES = [
         'DIRS': [PROJECT_ROOT + '/templates'],
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request'
-            ],
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+        ],
 
+            # PyPugJS part:
             'loaders': [
-                # PyJade part:   ##############################
-                ('pyjade.ext.django.Loader', (
+                ('pypugjs.ext.django.Loader', (
                     'django.template.loaders.filesystem.Loader',
                     'django.template.loaders.app_directories.Loader',
                 ))
             ],
-            'builtins': ['pyjade.ext.django.templatetags'],
+            'builtins': [
+                'pypugjs.ext.django.templatetags',
+            ],
             'debug': DEBUG,
         },
     }

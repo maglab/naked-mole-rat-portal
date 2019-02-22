@@ -47,7 +47,7 @@ def results(request):
     # Avoids repetition of stuff in the templates
     gene_pres_options = (('true', 'Show only best hit gene matches'), ('false', 'Show only low hit gene matches'))
 
-    return render(request, 'results.jade', {
+    return render(request, 'results.pug', {
         'results': results,
         'pages': pages,
         'term': term,
@@ -61,7 +61,7 @@ def details(request, identifier):
     """ Show the details of a sequence based on identifier """
     details = get_object_or_404(Sequence, identifier=identifier)
     sequence = details.sequence
-    return render(request, 'details.jade', {
+    return render(request, 'details.pug', {
         'details': details,
         'sequence': sequence,
     })
@@ -81,7 +81,7 @@ def alignments(request, identifier):
 def raw_sequence(request, identifier):
     """ Display a raw genomics sequence based on the identifier provided"""
     details = get_object_or_404(Sequence, identifier=identifier)
-    return render(request, 'raw_sequence.jade', {
+    return render(request, 'raw_sequence.pug', {
         'details': details
     })
 
@@ -95,7 +95,7 @@ def genage(request):
     end = results.page.number+3 if results.page.number+3 < results.page.end_index()+1 else results.page.end_index()+1
     pages = results.page.paginator.page_range[start:end]
 
-    return render(request, 'results_genage.jade', {
+    return render(request, 'results_genage.pug', {
         'pages': pages,
         'results': results
     })
