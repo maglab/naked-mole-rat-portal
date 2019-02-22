@@ -11,11 +11,11 @@ block content
     div.page.container
         div.row
             div.col-md-12
-                {% include 'search_box.jade' %}
+                {% include 'search_box.pug' %}
         div.row
             div.col-md-12
                 h2 Search results ({{results.paginator.count}} matches) 
-                form(method="get", action="{% url 'annotation_results' %}").panel.panel-default
+                form(method="get", action="{% url 'annotations:annotation_results' %}").panel.panel-default
                     input(type="hidden", name="sort", value="{{sort}}")
                     input(type="hidden", name="page", value="{{page|default:'1'}}")
                     input(type="hidden", name="s", value="{{term|default:""}}")

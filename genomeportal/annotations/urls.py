@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from . import views
 admin.autodiscover()
-#app_name = 'annotations'
+app_name = 'annotations'
 urlpatterns = [
     url(r'^$', views.results),
     url(r'^results/genage/$', views.genage, name='in_genage'),
