@@ -1,6 +1,6 @@
 Django==1.11.18
-Jinja2==2.7.1
-MarkupSafe==0.18
+Jinja2==2.10
+MarkupSafe==0.23
 argparse==1.2.1
 biopython==1.62
 django-haystack==2.7.0
@@ -14,4 +14,3 @@ simplejson==3.4.1
 six==1.4.1
 uWSGI==2.0.17.1
 wsgiref==0.1.2
-
