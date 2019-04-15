@@ -1,5 +1,5 @@
 Django==1.11.19
-Jinja2==2.10
+Jinja2==2.10.1
 MarkupSafe==0.23
 argparse==1.2.1
 biopython==1.62
