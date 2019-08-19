@@ -1,4 +1,4 @@
-Django==1.11.22
+Django==1.11.23
 Jinja2==2.10.1
 MarkupSafe==0.23
 argparse==1.2.1
